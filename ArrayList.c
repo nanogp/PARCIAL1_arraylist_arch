@@ -593,13 +593,13 @@ int contract(ArrayList* this, int index)
    return returnAux;
 }
 
-int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*, char*), char* mask, char* header, int pageSize)
+int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*), char* header, int pageSize)
 {
    int returnAux = -1;
    int count = 0;
    void* pElementAux;
 
-   if(this != NULL && from >= 0 && to <= this->len(this) && from <= to && (*pFunc) != NULL && header != NULL && mask != NULL)
+   if(this != NULL && from >= 0 && to <= this->len(this) && from <= to && (*pFunc) != NULL && header != NULL)
    {
       imprimirEnPantalla(header);
 
@@ -609,7 +609,7 @@ int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*, char*
 
          if(pElementAux != NULL)
          {
-            (*pFunc)(pElementAux, mask);
+            (*pFunc)(pElementAux);
             count++;
 
             if(count%pageSize == 0)
@@ -623,13 +623,13 @@ int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*, char*
    return returnAux;
 }
 
-int al_print(ArrayList* this, int (*pFunc)(void*, char*), char* mask, char* header, int pageSize)
+int al_print(ArrayList* this, int (*pFunc)(void*), char* header, int pageSize)
 {
    int returnAux = -1;
 
-   if(this != NULL && (pFunc) != NULL && header != NULL && mask != NULL)
+   if(this != NULL && (pFunc) != NULL && header != NULL)
    {
-      returnAux = this->printSubList(this, 0, this->len(this), pageSize, (pFunc), header, mask);
+      returnAux = this->printSubList(this, 0, this->len(this), pageSize, (pFunc), header);
    }
    return returnAux;
 }

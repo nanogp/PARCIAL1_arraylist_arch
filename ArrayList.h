@@ -242,8 +242,8 @@ int expand(ArrayList* this,int index);
 int contract(ArrayList* this,int index);
 //___________________
 
-int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*, char*), char* mask, char* header, int pageSize);
+int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*), char* header, int pageSize);
 
-int al_print(ArrayList* this, int (*pFunc)(void*, char*), char* mask, char* header, int pageSize);
+int al_print(ArrayList* this, int (*pFunc)(void*), char* header, int pageSize);
 
 ArrayList* al_filter(ArrayList* listIn, int (*functionFilter)(void*));

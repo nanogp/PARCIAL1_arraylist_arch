@@ -189,7 +189,7 @@ int ePropietario_informarListadoVacio(ArrayList* this)
 
         if(returnAux == 1)
         {
-            printf("\nEl listado de Propietarios se encuentra vacio");
+            imprimirEnPantalla(PROPIETARIO_MSJ_LISTA_VACIA);
         }
     }
     return returnAux;
@@ -266,22 +266,55 @@ ePropietario* ePropietario_pedirPropietario(ArrayList* this)
 //-----------------------------------------------------------------------------------------------//
 
 /**************************** LISTADO DE DATOS ***************************************************/
-void ePropietario_mostrarUno(ePropietario* this, char* mascara)
+void ePropietario_mostrarUno(ePropietario* this)
 {
     if(this != NULL)
     {
-        printf(mascara, this);
+        printf(PROPIETARIO_MOSTRAR_UNO_MASCARA
+             , this->getId(this)
+             , this->getNombre(this)
+             , this->getDireccion(this)
+             , this->getTarjeta(this));
     }
 }
 //-----------------------------------------------------------------------------------------------//
 
 /**************************** GESTION DE DATOS ***************************************************/
-int ePropietario_alta(ArrayList* this)
+//int ePropietario_gestionModificacion(ArrayList* this);
+//int ePropietario_gestionBaja(ArrayList* this);
+//int ePropietario_gestionListado(ArrayList* this);
+int ePropietario_gestionAlta(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
+    ePropietario* registro;
+    char confirmacion;
+
     if(this != NULL)
     {
         returnAux = OK;
+
+        limpiarPantallaYMostrarTitulo(PROPIETARIO_ALTA_TITULO);
+
+		registro = ePropietario_pedirPropietario(this);
+
+		imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
+		registro->print(registro);
+
+		confirmacion = pedirConfirmacion(MSJ_CONFIRMA_CORRECTOS);
+
+		if(confirmacion == 'S')
+		{
+			this->add(registro);
+			this->sort(this, ePropietario_compararPorId, ASC);
+			imprimirEnPantalla(PROPIETARIO_MSJ_ALTA_OK);
+		}
+		else
+		{
+			imprimirEnPantalla(MSJ_CANCELO_GESTION);
+		}
+
+        pausa();
+
     }
     return returnAux;
 }
@@ -312,10 +345,16 @@ int ePropietario_baja(ArrayList* this)
 int ePropietario_gestionListado(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
-    if(this != NULL)
+    if(this != NULL && !ePropietario_informarListadoVacio(this))
     {
-        returnAux = this->print(this, ePropietario_mostrarUno, PROPIETARIO_MOSTRAR_UNO_MASCARA, PROPIETARIO_MOSTRAR_UNO_CABECERA, PROPIETARIO_MOSTRAR_UNO_PAGINADO);
+        returnAux = OK;
+
+        limpiarPantallaYMostrarTitulo(PROPIETARIO_ALTA_TITULO);
+
+        returnAux = this->print(this, ePropietario_mostrarUno, PROPIETARIO_MOSTRAR_UNO_CABECERA, PROPIETARIO_MOSTRAR_UNO_PAGINADO);
     }
+
+    pausa();
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//

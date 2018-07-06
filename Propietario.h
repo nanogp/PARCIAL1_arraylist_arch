@@ -80,10 +80,10 @@ ePropietario* ePropietario_pedirIdYBuscar(ArrayList* this);
 char* ePropietario_pedirNombre();
 char* ePropietario_pedirDireccion();
 float ePropietario_pedirTarjeta();
-ePropietario* ePropietario_pedirPropietario();
+ePropietario* ePropietario_pedirPropietario(ArrayList* this);
 
 /**************************** LISTADO DE DATOS ***************************************************/
-void ePropietario_mostrarUno(ePropietario* propietario, char* mascara);
+void ePropietario_mostrarUno(ePropietario* propietario);
 
 /**************************** GESTION DE DATOS ***************************************************/
 int ePropietario_gestionAlta(ArrayList* this);
@@ -116,7 +116,7 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this);
 /**************************** MENSAJES ERROR *****************************************************/
 #define PROPIETARIO_MSJ_REINGRESE_ID "\nEl ID debe ser un numero mayor que cero. Reingrese un ID valido: \0"
 #define PROPIETARIO_MSJ_ID_NO_EXISTE "\nEl ID de Propietario ingresado no existe"
-#define PROPIETARIO_MSJ_LISTA_VACIA "\n\nLa lista de Propietarios esta vacia o todos los registros se dieron de baja"
+#define PROPIETARIO_MSJ_LISTA_VACIA "\n\nLa lista de Propietarios esta vacia"
 #define PROPIETARIO_MSJ_NO_MAS_LUGAR "\nNo hay mas lugares disponibles para altas de Propietario"
 #define PROPIETARIO_MSJ_REINGRESE_NOMBRE "\nNombre muy largo. Reingrese por favor: \0"
 #define PROPIETARIO_MSJ_REINGRESE_DIRECCION "\nDireccion muy larga. Reingrese por favor: \0"
@@ -130,7 +130,7 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this);
 #define PROPIETARIO_MSJ_REGISTRO_MODIFICADO "\n\nPropietario modificado: \0"
 
 /**************************** LISTADOS ***********************************************************/
-#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d - %-10s - %-10s - %-20s"
+#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d - %-10s - %-10s - %f"
 #define PROPIETARIO_MOSTRAR_UNO_CABECERA "\nID - NOMBRE - DIRECCION - TARJETA"
 #define PROPIETARIO_MOSTRAR_UNO_PAGINADO 20
 
