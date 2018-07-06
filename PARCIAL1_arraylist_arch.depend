@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1529952432 source:d:\github\parcial1_arraylist_arch\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1528489068 d:\github\parcial1_arraylist_arch\arraylist.h
+
+1528325451 source:d:\github\parcial1_arraylist_arch\general.c
+	"General.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1530029323 d:\github\parcial1_arraylist_arch\general.h
+
+1529956910 source:d:\github\parcial1_arraylist_arch\menu.c
+	"Menu.h"
+	"General.h"
+	<stdio.h>
+
+1529952509 d:\github\parcial1_arraylist_arch\menu.h
+
