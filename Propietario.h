@@ -64,7 +64,7 @@ float ePropietario_getTarjeta(ePropietario* this);
 int ePropietario_setIdPropietario(ePropietario* this, int id);
 int ePropietario_setNombre(ePropietario* this, char* nombre);
 int ePropietario_setDireccion(ePropietario* this, char* direccion);
-int ePropietario_setTarjeta(ePropietario* this, int tarjeta);
+int ePropietario_setTarjeta(ePropietario* this, float tarjeta);
 
 /**************************** CONSTRUCTORES ******************************************************/
 ePropietario* ePropietario_new();
@@ -130,7 +130,7 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this);
 #define PROPIETARIO_MSJ_REGISTRO_MODIFICADO "\n\nPropietario modificado: \0"
 
 /**************************** LISTADOS ***********************************************************/
-#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d - %-10s - %-10s - %f"
+#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d - %-10s - %-10s - %.2f"
 #define PROPIETARIO_MOSTRAR_UNO_CABECERA "\nID - NOMBRE - DIRECCION - TARJETA"
 #define PROPIETARIO_MOSTRAR_UNO_PAGINADO 20
 

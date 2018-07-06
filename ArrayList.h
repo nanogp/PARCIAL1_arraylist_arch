@@ -246,4 +246,4 @@ int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*), char
 
 int al_print(ArrayList* this, int (*pFunc)(void*), char* header, int pageSize);
 
-ArrayList* al_filter(ArrayList* listIn, int (*functionFilter)(void*));
+ArrayList* al_filter(ArrayList* this, int (*functionFilter)(void*));

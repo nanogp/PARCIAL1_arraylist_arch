@@ -634,26 +634,23 @@ int al_print(ArrayList* this, int (*pFunc)(void*), char* header, int pageSize)
    return returnAux;
 }
 
-ArrayList* al_filter(ArrayList* listIn, int (*functionFilter)(void*))
+ArrayList* al_filter(ArrayList* this, int (*functionFilter)(void*))
 {
-   ArrayList* returnAux = al_newArrayList();
+   ArrayList* that = al_newArrayList();
    void* pElement;
 
-   if(listIn != NULL && (*functionFilter) != NULL && returnAux != NULL)
+   if(this != NULL && (*functionFilter) != NULL && that != NULL)
    {
-      for(int i = 0 ; i<listIn->len(listIn) ; i++)
+      for(int i = 0 ; i<this->len(this) ; i++)
       {
-         pElement = listIn->get(listIn, i);
+         pElement = this->get(this, i);
 
          if((*functionFilter)(pElement))
          {
-            returnAux->add(returnAux, pElement);
+            that->add(that, pElement);
          }
       }
    }
 
-   return returnAux;
+   return that;
 }
-
-
-
