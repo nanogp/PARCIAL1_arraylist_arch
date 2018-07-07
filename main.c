@@ -25,6 +25,12 @@ int main()
 
     //ARRAYS DE ESTRUCTURAS
     ArrayList* listadoPropietarios = al_newArrayList();
+ePropietario* p;
+p = ePropietario_newParam(1,"jose","Araujo 12312",12345678);
+listadoPropietarios->add(listadoPropietarios,p);
+p = ePropietario_newParam(2,"domingo","sarmiento 123",87524);
+listadoPropietarios->add(listadoPropietarios,p);
+
 
     if(listadoPropietarios == NULL)
     {

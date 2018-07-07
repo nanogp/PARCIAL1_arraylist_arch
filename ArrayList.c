@@ -629,7 +629,7 @@ int al_print(ArrayList* this, int (*pFunc)(void*), char* header, int pageSize)
 
    if(this != NULL && (pFunc) != NULL && header != NULL)
    {
-      returnAux = this->printSubList(this, 0, this->len(this), pageSize, (pFunc), header);
+      returnAux = this->printSubList(this, 0, this->len(this), (pFunc), header, pageSize);
    }
    return returnAux;
 }

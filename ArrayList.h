@@ -242,8 +242,33 @@ int expand(ArrayList* this,int index);
 int contract(ArrayList* this,int index);
 //___________________
 
+/** \brief Shows objects in the list, using pFunc
+*          with a portion of pList between the specified from and to
+ * \param pList ArrayList* Pointer to arrayList
+ * \param from int Initial index of the element (inclusive)
+ * \param to int Final index of the element (exclusive)
+ * \param pFunc (*pFunc) Pointer to function to show elements of arrayList
+ * \param char* header Text to show as a header before elements of arrayList
+ * \param int pageSize Number of elements to show before making a pause
+ * \return int Return (-1) if Error [pList is NULL pointer or invalid index]
+ *                  - ( 0) if Ok
+ */
 int al_printSubList(ArrayList* this, int from, int to, int (*pFunc)(void*), char* header, int pageSize);
 
+/** \brief Shows objects in the list, using pFunc
+ * \param pList ArrayList* Pointer to arrayList
+ * \param pFunc (*pFunc) Pointer to function to show elements of arrayList
+ * \param char* header Text to show as a header before elements of arrayList
+ * \param int pageSize Number of elements to show before making a pause
+ * \return int Return (-1) if Error [pList is NULL pointer or invalid index]
+ *                  - ( 0) if Ok
+ */
 int al_print(ArrayList* this, int (*pFunc)(void*), char* header, int pageSize);
 
+/** \brief Returns a new arrayList with a portion of pList elements filtered by *functionFilter
+ * \param pList ArrayList* Pointer to arrayList
+ * \param functionFilter (*functionFilter) Pointer to function to filter elements of arrayList
+ * \return int Return (NULL) if Error [pList is NULL pointer]
+ *                  - ( pointer to new array) if Ok
+ */
 ArrayList* al_filter(ArrayList* this, int (*functionFilter)(void*));
