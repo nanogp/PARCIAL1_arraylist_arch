@@ -67,7 +67,7 @@ int ePropietario_setIdPropietario(ePropietario* this, int id)
 int ePropietario_setNombre(ePropietario* this, char* nombre)
 {
     int returnAux = CHECK_POINTER;
-    if(this != NULL)
+    if(this != NULL && nombre != NULL)
     {
         this->nombre = nombre;
         returnAux = OK;
@@ -79,7 +79,7 @@ int ePropietario_setNombre(ePropietario* this, char* nombre)
 int ePropietario_setDireccion(ePropietario* this, char* direccion)
 {
     int returnAux = CHECK_POINTER;
-    if(this != NULL)
+    if(this != NULL && direccion != NULL)
     {
         this->direccion = direccion;
         returnAux = OK;
@@ -127,7 +127,7 @@ ePropietario* ePropietario_new()
         propietario->setId              = ePropietario_setIdPropietario;
         propietario->setNombre          = ePropietario_setNombre;
         propietario->setDireccion       = ePropietario_setDireccion;
-        propietario->setTarjeta         = ePropietario_setTarjeta;
+        //propietario->setTarjeta         = ePropietario_setTarjeta;
         //------------input
         propietario->nextId             = ePropietario_siguienteId;
         propietario->inputNombre        = ePropietario_pedirNombre;
@@ -150,7 +150,8 @@ ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float
         propietario->setId(propietario, id);
         propietario->setNombre(propietario, nombre);
         propietario->setDireccion(propietario, direccion);
-        propietario->setTarjeta(propietario, tarjeta);
+        //propietario->setTarjeta(propietario, tarjeta);
+        ePropietario_setTarjeta(propietario, tarjeta);
     }
     return propietario;
 }
@@ -252,14 +253,14 @@ float ePropietario_pedirTarjeta()
 //-----------------------------------------------------------------------------------------------//
 ePropietario* ePropietario_pedirPropietario(ArrayList* this)
 {
-    ePropietario* propietario = ePropietario_new();
+    ePropietario* propietario;
 
-    if(this != NULL && propietario != NULL)
+    if(this != NULL)
     {
-        propietario->setId(propietario, propietario->nextId(this));
-        propietario->setNombre(propietario, propietario->inputNombre());
-        propietario->setDireccion(propietario, propietario->inputDireccion());
-        propietario->setTarjeta(propietario, propietario->inputTarjeta());
+        propietario = ePropietario_newParam(ePropietario_siguienteId(this),
+                                            ePropietario_pedirNombre(),
+                                            ePropietario_pedirDireccion(),
+                                            ePropietario_pedirTarjeta());
     }
     return propietario;
 }
@@ -373,7 +374,7 @@ int ePropietario_gestionListado(ArrayList* this)
 /**************************** ORDENAMIENTO *******************************************************/
 int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nroCampo)
 {
-    int returnAux = NULL;
+    int returnAux;
     if(this != NULL && that != NULL)
     {
         switch(nroCampo)
@@ -397,7 +398,7 @@ int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nr
 //-----------------------------------------------------------------------------------------------//
 int ePropietario_compararPorId(ePropietario* this, ePropietario* that)
 {
-    int returnAux = NULL;
+    int returnAux;
     if(this != NULL && that != NULL)
     {
         returnAux = this->getId(this) - this->getId(that);
@@ -407,7 +408,7 @@ int ePropietario_compararPorId(ePropietario* this, ePropietario* that)
 //-----------------------------------------------------------------------------------------------//
 int ePropietario_compararPorNombre(ePropietario* this, ePropietario* that)
 {
-    int returnAux = NULL;
+    int returnAux;
     if(this != NULL && that != NULL)
     {
         returnAux = strcmp(this->getNombre(this), this->getNombre(that));
@@ -417,7 +418,7 @@ int ePropietario_compararPorNombre(ePropietario* this, ePropietario* that)
 //-----------------------------------------------------------------------------------------------//
 int ePropietario_compararPorDireccion(ePropietario* this, ePropietario* that)
 {
-    int returnAux = NULL;
+    int returnAux;
     if(this != NULL && that != NULL)
     {
         returnAux = strcmp(this->getDireccion(this), this->getDireccion(that));
@@ -427,7 +428,7 @@ int ePropietario_compararPorDireccion(ePropietario* this, ePropietario* that)
 //-----------------------------------------------------------------------------------------------//
 int ePropietario_compararPorTarjeta(ePropietario* this, ePropietario* that)
 {
-    int returnAux = NULL;
+    int returnAux;
     if(this != NULL && that != NULL)
     {
         returnAux = this->getTarjeta(this) - this->getTarjeta(that);
