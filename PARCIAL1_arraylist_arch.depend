@@ -58,7 +58,7 @@
 	<stdlib.h>
 	<string.h>
 
-1530990817 source:c:\github\parcial1_arraylist_arch\main.c
+1530991085 source:c:\github\parcial1_arraylist_arch\main.c
 	<stdio.h>
 	<stdlib.h>
 	"General.h"
@@ -67,7 +67,7 @@
 
 1530983146 c:\github\parcial1_arraylist_arch\menu.h
 
-1530989892 c:\github\parcial1_arraylist_arch\propietario.h
+1530991099 c:\github\parcial1_arraylist_arch\propietario.h
 	"General.h"
 	"Menu.h"
 	"ArrayList.h"
@@ -78,7 +78,7 @@
 	"General.h"
 	<stdio.h>
 
-1530990851 source:c:\github\parcial1_arraylist_arch\propietario.c
+1530991127 source:c:\github\parcial1_arraylist_arch\propietario.c
 	"Propietario.h"
 	<stdio.h>
 	<string.h>

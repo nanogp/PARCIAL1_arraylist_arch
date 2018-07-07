@@ -254,13 +254,17 @@ float ePropietario_pedirTarjeta()
 ePropietario* ePropietario_pedirPropietario(ArrayList* this)
 {
     ePropietario* propietario;
+    char* nombre;
+    char* direccion;
+    float tarjeta;
 
     if(this != NULL)
     {
-        propietario = ePropietario_newParam(ePropietario_siguienteId(this),
-                                            ePropietario_pedirNombre(),
-                                            ePropietario_pedirDireccion(),
-                                            ePropietario_pedirTarjeta());
+        nombre = ePropietario_pedirNombre();
+        direccion = ePropietario_pedirDireccion();
+        tarjeta = ePropietario_pedirTarjeta();
+
+        propietario = ePropietario_newParam(ePropietario_siguienteId(this),nombre,direccion,tarjeta);
     }
     return propietario;
 }
@@ -271,11 +275,11 @@ void ePropietario_mostrarUno(ePropietario* this)
 {
     if(this != NULL)
     {
-        printf(PROPIETARIO_MOSTRAR_UNO_MASCARA
-             , this->getId(this)
-             , this->getNombre(this)
-             , this->getDireccion(this)
-             , this->getTarjeta(this));
+        printf(PROPIETARIO_MOSTRAR_UNO_MASCARA,
+               this->getId(this),
+               this->getNombre(this),
+               this->getDireccion(this),
+               this->getTarjeta(this));
     }
 }
 //-----------------------------------------------------------------------------------------------//
@@ -283,7 +287,6 @@ void ePropietario_mostrarUno(ePropietario* this)
 /**************************** GESTION DE DATOS ***************************************************/
 //int ePropietario_gestionModificacion(ArrayList* this);
 //int ePropietario_gestionBaja(ArrayList* this);
-//int ePropietario_gestionListado(ArrayList* this);
 int ePropietario_gestionAlta(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
@@ -294,9 +297,9 @@ int ePropietario_gestionAlta(ArrayList* this)
     {
         limpiarPantallaYMostrarTitulo(PROPIETARIO_ALTA_TITULO);
 
-		registro = ePropietario_pedirPropietario(this);
+        registro = ePropietario_pedirPropietario(this);
 
-		if(registro != NULL)
+        if(registro != NULL)
         {
             imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
             registro->print(registro);
@@ -310,16 +313,16 @@ int ePropietario_gestionAlta(ArrayList* this)
         }
 
 
-		if(confirmacion == 'S')
-		{
-			this->add(this, registro);
-			this->sort(this, ePropietario_compararPorId, ASC);
-			imprimirEnPantalla(PROPIETARIO_MSJ_ALTA_OK);
-		}
-		else
-		{
-			imprimirEnPantalla(MSJ_CANCELO_GESTION);
-		}
+        if(confirmacion == 'S')
+        {
+            this->add(this, registro);
+            this->sort(this, ePropietario_compararPorId, ASC);
+            imprimirEnPantalla(PROPIETARIO_MSJ_ALTA_OK);
+        }
+        else
+        {
+            imprimirEnPantalla(MSJ_CANCELO_GESTION);
+        }
 
         pausa();
 

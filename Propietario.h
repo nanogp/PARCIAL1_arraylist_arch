@@ -130,7 +130,7 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this);
 #define PROPIETARIO_MSJ_REGISTRO_MODIFICADO "\n\nPropietario modificado: \0"
 
 /**************************** LISTADOS ***********************************************************/
-#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d - %-10s - %-10s - %.2f"
+#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d - %-10s - %-10s - %.0f"
 #define PROPIETARIO_MOSTRAR_UNO_CABECERA "\nID - NOMBRE - DIRECCION - TARJETA"
 #define PROPIETARIO_MOSTRAR_UNO_PAGINADO 20
 

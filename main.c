@@ -25,11 +25,6 @@ int main()
 
     //ARRAYS DE ESTRUCTURAS
     ArrayList* listadoPropietarios = al_newArrayList();
-ePropietario* p;
-p = ePropietario_newParam(1,"jose","aa",123.45);
-p->print(p);
-pausa();
-salirDelPrograma ='S';
 
     if(listadoPropietarios == NULL)
     {
@@ -65,7 +60,6 @@ salirDelPrograma ='S';
                 break;
             case 8:
 
-                pausa();
                 break;
             case 9:
                 ePropietario_gestionListado(listadoPropietarios);
