@@ -31,10 +31,6 @@ typedef struct
     void (*print)();
     //------------sort
     int (*compare)();
-    int (*compareId)();
-    int (*compareNombre)();
-    int (*compareDireccion)();
-    int (*compareTarjeta)();
     //------------getters
     int (*getId)();
     char* (*getNombre)();
@@ -90,13 +86,16 @@ int ePropietario_gestionAlta(ArrayList* this);
 int ePropietario_gestionModificacion(ArrayList* this);
 int ePropietario_gestionBaja(ArrayList* this);
 int ePropietario_gestionListado(ArrayList* this);
+int ePropietario_gestionCargarArchivoDatos(ArrayList* this);
+int ePropietario_gestionGuardarArchivoDatos(ArrayList* this);
+
 
 /**************************** ORDENAMIENTO *******************************************************/
 int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nroCampo);
-int ePropietario_compararPorId(ePropietario* this, ePropietario* that);
-int ePropietario_compararPorNombre(ePropietario* this, ePropietario* that);
-int ePropietario_compararPorDireccion(ePropietario* this, ePropietario* that);
-int ePropietario_compararPorTarjeta(ePropietario* this, ePropietario* that);
+int ePropietario_compararPorId(void* this, void* that);
+int ePropietario_compararPorNombre(void* this, void* that);
+int ePropietario_compararPorDireccion(void* this, void* that);
+int ePropietario_compararPorTarjeta(void* this, void* that);
 int ePropietario_ordenarPorNombre(ArrayList* this);
 int ePropietario_ordenarPorTarjeta(ArrayList* this);
 
@@ -126,8 +125,8 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this);
 #define PROPIETARIO_MSJ_ALTA_OK "\nEl Propietario se dio de alta"
 #define PROPIETARIO_MSJ_BAJA_OK "\nEl Propietario se dio de baja"
 #define PROPIETARIO_MSJ_MODIFICACION_OK "\nEl Propietario se modifico"
-#define PROPIETARIO_MSJ_REGISTRO_ACTUAL "\n\nPropietario actual: \0"
-#define PROPIETARIO_MSJ_REGISTRO_MODIFICADO "\n\nPropietario modificado: \0"
+#define PROPIETARIO_MSJ_REGISTRO_ACTUAL "\n\nPropietario actual: "
+#define PROPIETARIO_MSJ_REGISTRO_MODIFICADO "\n\nPropietario modificado: "
 
 /**************************** LISTADOS ***********************************************************/
 #define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d \t %-10s \t %-10s \t %.0f"

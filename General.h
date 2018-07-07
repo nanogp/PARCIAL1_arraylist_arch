@@ -22,8 +22,9 @@
 #define EMPTY 0
 #define OK 0
 #define CHECK_POINTER -1
-#define CHECK_SPACE -2
-#define CHECK_IS_EMPTY -3
+#define CHECK_FILE -2
+#define CHECK_SPACE -3
+#define CHECK_IS_EMPTY -4
 
 
 /**************************** MENSAJES INFO ******************************************************/
@@ -32,11 +33,13 @@
 #define MSJ_MODIFICANDO_REGISTRO "MODIFICANDO REGISTRO"
 #define MSJ_DATOS_A_MODIFICAR "\nDatos a modificar:\n"
 #define MSJ_SALIR_DEL_PROGRAMA "Confirma que desea salir del programa?"
+#define MSJ_REG_PROCESADOS "\n%d registros procesados"
 
 /**************************** MENSAJES ERROR *****************************************************/
 #define MSJ_MALLOC_STRING_ERROR "\nNo se pudo asignar memoria para el texto solicitado"
 #define MSJ_FUERA_DE_RANGO_ERROR "\nEl valor ingresado esta fuera del rango %d a %d"
 #define MSJ_RANGO_INVALIDO_ERROR "\nEl rango %d a %d no es valido"
+#define MSJ_NUEVO_REG_ERROR "\nHubo errores asignando memoria para %d registros nuevos"
 
 /**************************** BUSQUEDA ***********************************************************/
 /** \brief busca coincidencia de un valor entero dentro de un array

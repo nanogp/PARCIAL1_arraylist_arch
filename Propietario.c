@@ -114,10 +114,6 @@ ePropietario* ePropietario_new()
         propietario->print              = ePropietario_mostrarUno;
         //------------sort
         propietario->compare            = ePropietario_compararPorCampo;
-        propietario->compareNombre      = ePropietario_compararPorCampo;
-        propietario->compareId          = ePropietario_compararPorCampo;
-        propietario->compareDireccion   = ePropietario_compararPorCampo;
-        propietario->compareTarjeta     = ePropietario_compararPorCampo;
         //------------getters
         propietario->getId              = ePropietario_getIdPropietario;
         propietario->getNombre          = ePropietario_getNombre;
@@ -285,8 +281,6 @@ void ePropietario_mostrarUno(ePropietario* this)
 //-----------------------------------------------------------------------------------------------//
 
 /**************************** GESTION DE DATOS ***************************************************/
-//int ePropietario_gestionModificacion(ArrayList* this);
-//int ePropietario_gestionBaja(ArrayList* this);
 int ePropietario_gestionAlta(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
@@ -372,7 +366,143 @@ int ePropietario_gestionListado(ArrayList* this)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
+#define PROPIETARIO_CARGAR_ARCHIVO_DATOS_TITULO "CARGA ARCHIVO DE DATOS"
+#define PROPIETARIO_MSJ_INGRESE_RUTA_DATOS "\nIngrese ruta del archivo de datos:\n"
+#define PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS "\nReingrese una ruta valida:\n"
+#define PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR "\nNo pudo abrirse el archivo:\n %s"
+int ePropietario_gestionCargarArchivoDatos(ArrayList* this)
+{
+    int returnAux = CHECK_POINTER;
+    FILE* pFile;
+    char* ruta;
+    char* modoLectura = "rb";
+    ePropietario* registro;
+    int errorNuevoRegistro = 0;
+    int regProcesados = 0;
 
+    if(this != NULL)
+    {
+        returnAux = CHECK_FILE;
+
+        limpiarPantallaYMostrarTitulo(PROPIETARIO_CARGAR_ARCHIVO_DATOS_TITULO);
+
+        ruta = constructorStringParametrizado(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
+
+        pFile = fopen(ruta, modoLectura);
+
+        if(pFile == NULL)
+        {
+            printf(PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+        }
+        else
+        {
+            if(this->len(this) > 0)
+            {
+                this->clear(this);
+            }
+
+            registro = ePropietario_new();
+            if(registro != NULL)
+            {
+                fread(registro, sizeof(ePropietario), 1, pFile);
+            }
+            else
+            {
+                errorNuevoRegistro++;
+            };
+
+            while(!feof(pFile))
+            {
+
+                if(feof(pFile)){break;} //bug ultima lectura doble
+
+                this->add(this, registro);
+                this->sort(this, ePropietario_compararPorId, ASC);
+                regProcesados++;
+
+                registro = ePropietario_new();
+                if(registro != NULL)
+                {
+                    fread(registro, sizeof(ePropietario), 1, pFile);
+                }
+                else
+                {
+                    errorNuevoRegistro++;
+                };
+            }
+            fclose(pFile);
+
+            returnAux = OK;
+
+            printf(MSJ_REG_PROCESADOS, regProcesados);
+            if(errorNuevoRegistro > 0)
+            {
+                printf(MSJ_NUEVO_REG_ERROR, errorNuevoRegistro);
+            }
+        }//endif pFile
+    }//endif this
+
+    pausa();
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
+#define PROPIETARIO_GUARDAR_ARCHIVO_DATOS_TITULO "GUARDAR ARCHIVO DE DATOS"
+int ePropietario_gestionGuardarArchivoDatos(ArrayList* this)
+{
+    int returnAux = CHECK_POINTER;
+    FILE* pFile;
+    char* ruta;
+    char* modoEscritura = "wb";
+    ePropietario* registro;
+    int errorLecturaRegistro = 0;
+    int regProcesados = 0;
+
+    if(this != NULL)
+    {
+        returnAux = CHECK_FILE;
+
+        limpiarPantallaYMostrarTitulo(PROPIETARIO_GUARDAR_ARCHIVO_DATOS_TITULO);
+
+        ruta = constructorStringParametrizado(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
+
+        pFile = fopen(ruta, modoEscritura);
+
+        if(pFile == NULL)
+        {
+            printf(PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+        }
+        else
+        {
+            for(int i=0 ; i<this->len(this) ; i++)
+            {
+                registro = (ePropietario*) this->get(this, i);
+
+                if(registro != NULL)
+                {
+                    fwrite(registro, sizeof(ePropietario), 1, pFile);
+                    regProcesados++;
+                }
+                else
+                {
+                    errorLecturaRegistro++;
+                };
+            }
+            fclose(pFile);
+
+            returnAux = OK;
+
+            printf(MSJ_REG_PROCESADOS, regProcesados);
+            if(errorLecturaRegistro > 0)
+            {
+                printf("\nHubo errores leyendo %d registros", errorLecturaRegistro);
+            }
+        }//endif pFile
+    }//endif this
+
+    pausa();
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
 
 /**************************** ORDENAMIENTO *******************************************************/
 int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nroCampo)
@@ -383,58 +513,70 @@ int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nr
         switch(nroCampo)
         {
             case 1:
-                returnAux = this->getId(this) - this->getId(that);
+                returnAux = this->getId(this) - that->getId(that);
                 break;
             case 2:
-                returnAux = ePropietario_compararPorNombre(this, that);
+                returnAux = strcmp(this->getNombre(this), that->getNombre(that));
                 break;
             case 3:
-                returnAux = strcmp(this->getDireccion(this), this->getDireccion(that));
+                returnAux = strcmp(this->getDireccion(this), that->getDireccion(that));
                 break;
             case 4:
-                returnAux = this->getTarjeta(this) - this->getTarjeta(that);
+                returnAux = this->getTarjeta(this) - that->getTarjeta(that);
                 break;
         }
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-int ePropietario_compararPorId(ePropietario* this, ePropietario* that)
+int ePropietario_compararPorId(void* this, void* that)
 {
     int returnAux;
-    if(this != NULL && that != NULL)
+    ePropietario* thisP = (ePropietario*) this;
+    ePropietario* thatP = (ePropietario*) that;
+
+    if(thisP != NULL && thatP != NULL)
     {
-        returnAux = this->getId(this) - this->getId(that);
+        returnAux = thisP->getId(thisP) - thatP->getId(thatP);
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-int ePropietario_compararPorNombre(ePropietario* this, ePropietario* that)
+int ePropietario_compararPorNombre(void* this, void* that)
 {
     int returnAux;
-    if(this != NULL && that != NULL)
+    ePropietario* thisP = (ePropietario*) this;
+    ePropietario* thatP = (ePropietario*) that;
+
+    if(thisP != NULL && thatP != NULL)
     {
-        returnAux = strcmp(this->getNombre(this), this->getNombre(that));
+        returnAux = strcmp(thisP->getNombre(thisP), thatP->getNombre(thatP));
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-int ePropietario_compararPorDireccion(ePropietario* this, ePropietario* that)
+int ePropietario_compararPorDireccion(void* this, void* that)
 {
     int returnAux;
-    if(this != NULL && that != NULL)
+    ePropietario* thisP = (ePropietario*) this;
+    ePropietario* thatP = (ePropietario*) that;
+
+    if(thisP != NULL && thatP != NULL)
     {
-        returnAux = strcmp(this->getDireccion(this), this->getDireccion(that));
+        returnAux = strcmp(thisP->getDireccion(thisP), thatP->getDireccion(thatP));
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-int ePropietario_compararPorTarjeta(ePropietario* this, ePropietario* that)
+int ePropietario_compararPorTarjeta(void* this, void* that)
 {
     int returnAux;
-    if(this != NULL && that != NULL)
+    ePropietario* thisP = (ePropietario*) this;
+    ePropietario* thatP = (ePropietario*) that;
+
+    if(thisP != NULL && thatP != NULL)
     {
-        returnAux = this->getTarjeta(this) - this->getTarjeta(that);
+        returnAux = thisP->getTarjeta(thisP) - thatP->getTarjeta(thatP);
     }
     return returnAux;
 }
