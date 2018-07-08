@@ -234,12 +234,12 @@ ePropietario* ePropietario_pedirIdYBuscar(ArrayList* this)
 /**************************** ENTRADA DE DATOS ***************************************************/
 char* ePropietario_pedirNombre()
 {
-    return constructorStringParametrizado(PROPIETARIO_MSJ_INGRESE_NOMBRE, PROPIETARIO_MSJ_REINGRESE_NOMBRE, PROPIETARIO_LARGO_NOMBRE);
+    return eString_newParam(PROPIETARIO_MSJ_INGRESE_NOMBRE, PROPIETARIO_MSJ_REINGRESE_NOMBRE, PROPIETARIO_LARGO_NOMBRE);
 }
 //-----------------------------------------------------------------------------------------------//
 char* ePropietario_pedirDireccion()
 {
-    return constructorStringParametrizado(PROPIETARIO_MSJ_INGRESE_DIRECCION, PROPIETARIO_MSJ_REINGRESE_DIRECCION, PROPIETARIO_LARGO_DIRECCION);
+    return eString_newParam(PROPIETARIO_MSJ_INGRESE_DIRECCION, PROPIETARIO_MSJ_REINGRESE_DIRECCION, PROPIETARIO_LARGO_DIRECCION);
 }
 //-----------------------------------------------------------------------------------------------//
 float ePropietario_pedirTarjeta()
@@ -336,17 +336,49 @@ int ePropietario_modificacion(ArrayList* this)
 }
 //-----------------------------------------------------------------------------------------------//
 
-int ePropietario_baja(ArrayList* this)
+int ePropietario_gestionBaja(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
+    ePropietario* registro;
+    char confirmacion;
+
     if(this != NULL)
     {
-        returnAux = OK;
+        limpiarPantallaYMostrarTitulo(PROPIETARIO_BAJA_TITULO);
+
+        if(!ePropietario_informarListadoVacio(this))
+        {
+            ePropietario_gestionListado(this);
+
+            imprimirTitulo(PROPIETARIO_BAJA_TITULO);
+            registro = ePropietario_pedirIdYBuscar(this);
+
+            if(registro != NULL)
+            {
+                imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
+                registro->print(registro);
+                confirmacion = pedirConfirmacion(PROPIETARIO_MSJ_CONFIRMAR_BAJA);
+            }
+
+            if(confirmacion == 'S')
+            {
+                this->remove(this, this->indexOf(this, registro));
+                this->sort(this, ePropietario_compararPorId, ASC);
+                imprimirEnPantalla(PROPIETARIO_MSJ_BAJA_OK);
+            }
+            else
+            {
+                imprimirEnPantalla(MSJ_CANCELO_GESTION);
+            }
+            returnAux = OK;
+        }
+
+        pausa();
+
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-
 int ePropietario_gestionListado(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
@@ -361,8 +393,6 @@ int ePropietario_gestionListado(ArrayList* this)
             returnAux = this->print(this, ePropietario_mostrarUno, PROPIETARIO_MOSTRAR_UNO_CABECERA, PROPIETARIO_MOSTRAR_UNO_PAGINADO);
         }
     }
-
-    pausa();
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
@@ -386,7 +416,7 @@ int ePropietario_gestionCargarArchivoDatos(ArrayList* this)
 
         limpiarPantallaYMostrarTitulo(PROPIETARIO_CARGAR_ARCHIVO_DATOS_TITULO);
 
-        ruta = constructorStringParametrizado(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
+        ruta = eString_newParam(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
 
         pFile = fopen(ruta, modoLectura);
 
@@ -405,6 +435,8 @@ int ePropietario_gestionCargarArchivoDatos(ArrayList* this)
             if(registro != NULL)
             {
                 fread(registro, sizeof(ePropietario), 1, pFile);
+                registro->print(registro);
+                pausa();
             }
             else
             {
@@ -459,43 +491,46 @@ int ePropietario_gestionGuardarArchivoDatos(ArrayList* this)
 
     if(this != NULL)
     {
-        returnAux = CHECK_FILE;
-
         limpiarPantallaYMostrarTitulo(PROPIETARIO_GUARDAR_ARCHIVO_DATOS_TITULO);
 
-        ruta = constructorStringParametrizado(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
-
-        pFile = fopen(ruta, modoEscritura);
-
-        if(pFile == NULL)
+        if(!ePropietario_informarListadoVacio(this))
         {
-            printf(PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR, ruta);
-        }
-        else
-        {
-            for(int i=0 ; i<this->len(this) ; i++)
+            returnAux = CHECK_FILE;
+
+            ruta = eString_newParam(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
+
+            pFile = fopen(ruta, modoEscritura);
+
+            if(pFile == NULL)
             {
-                registro = (ePropietario*) this->get(this, i);
-
-                if(registro != NULL)
+                printf(PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+            }
+            else
+            {
+                for(int i=0 ; i<this->len(this) ; i++)
                 {
-                    fwrite(registro, sizeof(ePropietario), 1, pFile);
-                    regProcesados++;
+                    registro = (ePropietario*) this->get(this, i);
+
+                    if(registro != NULL)
+                    {
+                        fwrite(registro, sizeof(ePropietario), 1, pFile);
+                        regProcesados++;
+                    }
+                    else
+                    {
+                        errorLecturaRegistro++;
+                    };
                 }
-                else
+                fclose(pFile);
+
+                returnAux = OK;
+
+                printf(MSJ_REG_PROCESADOS, regProcesados);
+                if(errorLecturaRegistro > 0)
                 {
-                    errorLecturaRegistro++;
-                };
-            }
-            fclose(pFile);
-
-            returnAux = OK;
-
-            printf(MSJ_REG_PROCESADOS, regProcesados);
-            if(errorLecturaRegistro > 0)
-            {
-                printf("\nHubo errores leyendo %d registros", errorLecturaRegistro);
-            }
+                    printf("\nHubo errores leyendo %d registros", errorLecturaRegistro);
+                }
+            }//endif vacio
         }//endif pFile
     }//endif this
 

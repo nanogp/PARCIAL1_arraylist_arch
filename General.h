@@ -127,7 +127,7 @@ float pedirFloatValido(char*, char*, float, float);
  * \return char* puntero a char donde se retorna el string creado
  *
  */
-char* constructorString(int limite);
+char* eString_new(int limite);
 //-----------------------------------------------------------------------------------------------//
 /** \brief pide memoria para una cadena de texto y realiza su ingreso validado
  *
@@ -137,7 +137,7 @@ char* constructorString(int limite);
  * \return char* puntero a char donde se retorna el string creado y validado
  *
  */
-char* constructorStringParametrizado(char* mensajeIngreso, char* mensajeReingreso, int limite);
+char* eString_newParam(char* mensajeIngreso, char* mensajeReingreso, int limite);
 //-----------------------------------------------------------------------------------------------//
 /** \brief pide que se ingrese una cadena de texto y la asigna a una variable
  *

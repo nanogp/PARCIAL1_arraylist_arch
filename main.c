@@ -8,23 +8,23 @@ int main()
 {
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"ESTACIONAMIENTO"},
-                           /*cantidad de opciones*/17,
-                           /*codigos*/{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,0},
+                           /*cantidad de opciones*/7,
+                           /*codigos*/{1,2,3,7,8,16,0},
                            /*descripciones*/{"\n 1. Alta Propietario"
                                              "\n 2. Modificacion Propietario"
                                              "\n 3. Baja Propietario"
-                                             "\n 4. Ingreso del Automovil"
-                                             "\n 5. Modificacion Automovil"
-                                             "\n 6. Egreso del Automovil"
+//                                             "\n 4. Ingreso del Automovil"
+//                                             "\n 5. Modificacion Automovil"
+//                                             "\n 6. Egreso del Automovil"
                                              "\n 7. Cargar Archivo Datos Propietarios"
                                              "\n 8. Guardar Archivo Datos Propietarios"
-                                             "\n 9. Cargar Archivo CSV Propietarios"
-                                             "\n10. Guardar Archivo CSV Propietarios"
-                                             "\n11. Cargar Archivo Datos Automoviles"
-                                             "\n12. Guardar Archivo Datos Automoviles"
-                                             "\n13. Cargar Archivo CSV Automoviles"
-                                             "\n14. Guardar Archivo CSV Automoviles"
-                                             "\n15. Listar Automoviles"
+//                                             "\n 9. Cargar Archivo CSV Propietarios"
+//                                             "\n10. Guardar Archivo CSV Propietarios"
+//                                             "\n11. Cargar Archivo Datos Automoviles"
+//                                             "\n12. Guardar Archivo Datos Automoviles"
+//                                             "\n13. Cargar Archivo CSV Automoviles"
+//                                             "\n14. Guardar Archivo CSV Automoviles"
+//                                             "\n15. Listar Automoviles"
                                              "\n16. Listar Propietarios"
                                              "\n 0. Salir del programa"}};
     int opcion;
@@ -58,7 +58,7 @@ int main()
 
                 break;
             case 3:
-
+                ePropietario_gestionBaja(listadoPropietarios);
                 break;
             case 4:
 
@@ -96,7 +96,7 @@ int main()
             case 15:
                 break;
             case 16:
-                ePropietario_gestionListado(listadoPropietarios);
+                ePropietario_gestionListado(listadoPropietarios);pausa();
                 break;
             case 0:
                 salirDelPrograma = pedirConfirmacion("Confirma que desea salir del programa?");

@@ -131,7 +131,7 @@ float pedirFloatValido(char* mensajeIngreso, char* mensajeReingreso, float limit
    return retorno;
 }
 //-----------------------------------------------------------------------------------------------//
-char* constructorString(int limite)
+char* eString_new(int limite)
 {
    char* retorno;
 
@@ -140,15 +140,15 @@ char* constructorString(int limite)
    return retorno;
 }
 //-----------------------------------------------------------------------------------------------//
-char* constructorStringParametrizado(char* mensajeIngreso, char* mensajeReingreso, int limite)
+char* eString_newParam(char* mensajeIngreso, char* mensajeReingreso, int limite)
 {
    int longitud;
    char valido = 'N';
    char* stringValidar;
    char* retorno;
 
-   stringValidar = constructorString(limite+5);
-   retorno = constructorString(limite);
+   stringValidar = eString_new(limite+5);
+   retorno = eString_new(limite);
 
    if(stringValidar !=NULL && retorno != NULL)
    {
@@ -199,7 +199,7 @@ int pedirStringValido(char* stringValido, char* mensajeIngreso, char* mensajeRei
    char valido = 'N';
    char* stringValidar;
 
-   stringValidar = constructorString(limite+5);
+   stringValidar = eString_new(limite+5);
 
    if(stringValidar !=NULL && stringValido != NULL)
    {

@@ -41,44 +41,44 @@
 	<stdio.h>
 	<string.h>
 
-1530992720 source:c:\github\parcial1_arraylist_arch\arraylist.c
+1531073974 source:c:\github\parcial1_arraylist_arch\arraylist.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"ArrayList.h"
 
-1530992162 c:\github\parcial1_arraylist_arch\arraylist.h
+1531073974 c:\github\parcial1_arraylist_arch\arraylist.h
 	"General.h"
 
-1530996246 c:\github\parcial1_arraylist_arch\general.h
+1531074869 c:\github\parcial1_arraylist_arch\general.h
 
-1530983146 source:c:\github\parcial1_arraylist_arch\general.c
+1531074869 source:c:\github\parcial1_arraylist_arch\general.c
 	"General.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1530996864 source:c:\github\parcial1_arraylist_arch\main.c
+1531078884 source:c:\github\parcial1_arraylist_arch\main.c
 	<stdio.h>
 	<stdlib.h>
 	"General.h"
 	"Menu.h"
 	"Propietario.h"
 
-1530983146 c:\github\parcial1_arraylist_arch\menu.h
+1531073974 c:\github\parcial1_arraylist_arch\menu.h
 
-1530997664 c:\github\parcial1_arraylist_arch\propietario.h
+1531077184 c:\github\parcial1_arraylist_arch\propietario.h
 	"General.h"
 	"Menu.h"
 	"ArrayList.h"
 	<stdlib.h>
 
-1530983146 source:c:\github\parcial1_arraylist_arch\menu.c
+1531073974 source:c:\github\parcial1_arraylist_arch\menu.c
 	"Menu.h"
 	"General.h"
 	<stdio.h>
 
-1530996673 source:c:\github\parcial1_arraylist_arch\propietario.c
+1531078917 source:c:\github\parcial1_arraylist_arch\propietario.c
 	"Propietario.h"
 	<stdio.h>
 	<string.h>
