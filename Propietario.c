@@ -351,14 +351,15 @@ int ePropietario_gestionBaja(ArrayList* this)
             ePropietario_gestionListado(this);
 
             imprimirTitulo(PROPIETARIO_BAJA_TITULO);
-            registro = ePropietario_pedirIdYBuscar(this);
 
-            if(registro != NULL)
+            while(registro == NULL)
             {
-                imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
-                registro->print(registro);
-                confirmacion = pedirConfirmacion(PROPIETARIO_MSJ_CONFIRMAR_BAJA);
+                registro = ePropietario_pedirIdYBuscar(this);
             }
+
+            imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
+            registro->print(registro);
+            confirmacion = pedirConfirmacion(PROPIETARIO_MSJ_CONFIRMAR_BAJA);
 
             if(confirmacion == 'S')
             {
@@ -435,8 +436,6 @@ int ePropietario_gestionCargarArchivoDatos(ArrayList* this)
             if(registro != NULL)
             {
                 fread(registro, sizeof(ePropietario), 1, pFile);
-                registro->print(registro);
-                pausa();
             }
             else
             {
@@ -513,7 +512,7 @@ int ePropietario_gestionGuardarArchivoDatos(ArrayList* this)
 
                     if(registro != NULL)
                     {
-                        fwrite(registro, sizeof(ePropietario), 1, pFile);
+                        fwrite(this->get(this, i), sizeof(ePropietario), 1, pFile);
                         regProcesados++;
                     }
                     else
