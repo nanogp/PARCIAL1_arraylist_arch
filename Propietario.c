@@ -69,7 +69,7 @@ int ePropietario_setNombre(ePropietario* this, char* nombre)
     int returnAux = CHECK_POINTER;
     if(this != NULL && nombre != NULL)
     {
-        this->nombre = nombre;
+        strcpy(this->nombre, nombre);
         returnAux = OK;
     }
     return returnAux;
@@ -81,7 +81,7 @@ int ePropietario_setDireccion(ePropietario* this, char* direccion)
     int returnAux = CHECK_POINTER;
     if(this != NULL && direccion != NULL)
     {
-        this->direccion = direccion;
+        strcpy(this->direccion, direccion);
         returnAux = OK;
     }
     return returnAux;
@@ -339,7 +339,7 @@ int ePropietario_modificacion(ArrayList* this)
 int ePropietario_gestionBaja(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
-    ePropietario* registro;
+    ePropietario* registro = NULL;
     char confirmacion;
 
     if(this != NULL)
@@ -427,9 +427,13 @@ int ePropietario_gestionCargarArchivoDatos(ArrayList* this)
         }
         else
         {
-            if(this->len(this) > 0)
+            if(this->len(this) > 0) //vaciar lista
             {
-                this->clear(this);
+                for(int i=0 ; i<this->len(this) ; i++)
+                {
+                    registro = this->pop(this, i);
+                    free(registro);
+                }
             }
 
             registro = ePropietario_new();
@@ -509,10 +513,11 @@ int ePropietario_gestionGuardarArchivoDatos(ArrayList* this)
                 for(int i=0 ; i<this->len(this) ; i++)
                 {
                     registro = (ePropietario*) this->get(this, i);
+                    registro->print(registro);pausa();
 
                     if(registro != NULL)
                     {
-                        fwrite(this->get(this, i), sizeof(ePropietario), 1, pFile);
+                        fwrite(registro, sizeof(ePropietario), 1, pFile);
                         regProcesados++;
                     }
                     else

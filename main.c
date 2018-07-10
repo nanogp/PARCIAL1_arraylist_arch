@@ -4,8 +4,58 @@
 #include "Menu.h"
 #include "Propietario.h"
 
+
+void prueba1()
+{
+    FILE* p = fopen("a.dat", "wb");
+    ePropietario* e;
+    ArrayList* l = al_newArrayList();
+
+    do
+    {
+        e = ePropietario_pedirPropietario(l);
+        e = (ePropietario*) l->get(l, l->len(l)-1);
+        e->print(e);
+        fwrite(e, sizeof(ePropietario), 1, p);
+    }
+    while(pedirConfirmacion("continuar") == 'S');
+    fclose(p);
+}
+
+
+void prueba2()
+{
+    FILE* pf;
+    ePropietario* e;
+    ArrayList* l2 = al_newArrayList();
+    char* modo = "rb";
+
+    pf = fopen("a.dat",modo);
+    e = (ePropietario*)malloc(sizeof(ePropietario));
+    fread(e, sizeof(ePropietario),1,pf);
+    if(ftell(pf)>=0)
+    {
+        printf("se abrio");
+    }
+    while(!feof(pf))
+    {
+        l2->add(l2,e);
+        e = (ePropietario*)malloc(sizeof(ePropietario));
+        //e = ePropietario_new();
+        fread(e, sizeof(ePropietario),1,pf);
+    }
+    fclose(pf);
+
+    l2->print(l2, ePropietario_mostrarUno, "char* header", 0);
+
+    pausa();
+}
+
+
 int main()
 {
+//    prueba1();
+//    prueba2();
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"ESTACIONAMIENTO"},
                            /*cantidad de opciones*/7,

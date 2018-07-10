@@ -24,8 +24,8 @@ typedef struct
     //------------id
     int idPropietario;
     //------------properties
-    char* nombre;
-    char* direccion;
+    char nombre[PROPIETARIO_LARGO_NOMBRE];
+    char direccion[PROPIETARIO_LARGO_DIRECCION];
     float tarjeta;
     //------------list
     void (*print)();
