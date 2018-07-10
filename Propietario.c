@@ -513,7 +513,6 @@ int ePropietario_gestionGuardarArchivoDatos(ArrayList* this)
                 for(int i=0 ; i<this->len(this) ; i++)
                 {
                     registro = (ePropietario*) this->get(this, i);
-                    registro->print(registro);pausa();
 
                     if(registro != NULL)
                     {
