@@ -32,27 +32,26 @@ typedef struct
 
 
 /**************************** GETTERS ************************************************************/
-int ePropietario_getIdPropietario(ePropietario* this);
-char* ePropietario_getNombre(ePropietario* this);
-char* ePropietario_getDireccion(ePropietario* this);
-float ePropietario_getTarjeta(ePropietario* this);
+int ePropietario_getIdPropietario(void* this);
+char* ePropietario_getNombre(void* this);
+char* ePropietario_getDireccion(void* this);
+float ePropietario_getTarjeta(void* this);
 
 /**************************** SETTERS ************************************************************/
-int ePropietario_setIdPropietario(ePropietario* this, int id);
-int ePropietario_setNombre(ePropietario* this, char* nombre);
-int ePropietario_setDireccion(ePropietario* this, char* direccion);
-int ePropietario_setTarjeta(ePropietario* this, float tarjeta);
+int ePropietario_setIdPropietario(void* this, int id);
+int ePropietario_setNombre(void* this, char* nombre);
+int ePropietario_setDireccion(void* this, char* direccion);
+int ePropietario_setTarjeta(void* this, float tarjeta);
 
 /**************************** CONSTRUCTORES ******************************************************/
-void ePropietario_setMedotos(ePropietario* propietario);
-ePropietario* ePropietario_new();
-ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta);
+void* ePropietario_new();
+void* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta);
 
 /**************************** ENTRADA DE DATOS ***************************************************/
 char* ePropietario_pedirNombre();
 char* ePropietario_pedirDireccion();
 float ePropietario_pedirTarjeta();
-ePropietario* ePropietario_pedirPropietario(ArrayList* this);
+void* ePropietario_pedirPropietario(ArrayList* this);
 
 /**************************** GESTION DE DATOS ***************************************************/
 int ePropietario_modificarUno(void* this);
@@ -60,7 +59,7 @@ char* ePropietario_parserATexto(void* this, int bufferSize);
 void* ePropietario_parserAVoid(char* this, int bufferSize);
 
 /**************************** LISTADO DE DATOS ***************************************************/
-void ePropietario_mostrarUno(ePropietario* propietario);
+void ePropietario_mostrarUno(void* propietario);
 
 /**************************** ORDENAMIENTO *******************************************************/
 int ePropietario_compararPorId(void* this, void* that);

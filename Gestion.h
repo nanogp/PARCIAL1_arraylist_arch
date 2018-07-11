@@ -10,6 +10,7 @@
 #define GESTION_RUTA_LARGO_MAX 255
 
 /**************************** BUSQUEDA ***********************************************************/
+int eGestion_compararPorId(void* this, void* that, int (*pGetId)(void*));
 int eGestion_siguienteId(ArrayList* this, int (*pGetId)(void*));
 int eGestion_informarListadoVacio(ArrayList* this, char* mensaje);
 void* eGestion_buscarPorId(ArrayList* this, int (*pGetId)(void*), int id);
@@ -56,25 +57,10 @@ int eGestion_modificacion(ArrayList* this,
                           int idMin,
                           int idMax,
                           int paginado);
-int eGestion_cargarArchivoDatos(ArrayList* this,
-                                int (*pComparar)(void*, void*),
-                                void* (*pConstructor)(),
-                                int sizeOfStruct,
-                                char* titulo);
-int eGestion_guardarArchivoDatos(ArrayList* this,
-                                 int sizeOfStruct,
-                                 char* titulo,
-                                 char* msjListaVacia);
-int eGestion_cargarArchivoTexto(ArrayList* this,
-                                void* (*pParseAVoid)(char*, int),
-                                int (*pComparar)(void*, void*),
-                                char* titulo,
-                                int bufferSize);
-int eGestion_guardarArchivoTexto(ArrayList* this,
-                                 char* (*pParseATexto)(void*, int),
-                                 char* titulo,
-                                 char* msjListaVacia,
-                                 int bufferSize);
+int eGestion_cargarArchivoDatos(ArrayList* this, int (*pComparar)(void*, void*), void* (*pConstructor)(), int sizeOfStruct, char* titulo);
+int eGestion_guardarArchivoDatos(ArrayList* this, int sizeOfStruct, char* titulo, char* msjListaVacia);
+int eGestion_cargarArchivoTexto(ArrayList* this, void* (*pParseAVoid)(char*, int), int (*pComparar)(void*, void*), char* titulo, int bufferSize);
+int eGestion_guardarArchivoTexto(ArrayList* this, char* (*pParseATexto)(void*, int), char* titulo, char* msjListaVacia, int bufferSize);
 int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
 
 /**************************** TITULOS ************************************************************/

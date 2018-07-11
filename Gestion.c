@@ -342,13 +342,10 @@ int eGestion_cargarArchivoDatos(ArrayList* this,
         }
         else
         {
-            if(this->len(this) > 0) //vaciar lista
+            while(this->len(this) > 0) //vaciar lista
             {
-                for(int i=0 ; i<this->len(this) ; i++)
-                {
-                    pElement = this->pop(this, i);
-                    free(pElement);
-                }
+                pElement = this->pop(this, 0);
+                free(pElement);
             }
 
             pElement = (*pConstructor)();
@@ -489,13 +486,10 @@ int eGestion_cargarArchivoTexto(ArrayList* this,
         }
         else
         {
-            if(this->len(this) > 0) //vaciar lista
+            while(this->len(this) > 0) //vaciar lista
             {
-                for(int i=0 ; i<this->len(this) ; i++)
-                {
-                    pElement = this->pop(this, i);
-                    free(pElement);
-                }
+                pElement = this->pop(this, 0);
+                free(pElement);
             }
 
             buffer = eString_new(bufferSize);
@@ -578,7 +572,7 @@ int eGestion_guardarArchivoTexto(ArrayList* this,
                 for(int i=0 ; i<this->len(this) ; i++)
                 {
                     pElement = this->get(this, i);
-                    buffer = (*pParseATexto)(pElement,bufferSize);
+                    buffer = (*pParseATexto)(pElement, bufferSize);
 
                     if(pElement != NULL && buffer != NULL)
                     {

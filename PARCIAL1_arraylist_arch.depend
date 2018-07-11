@@ -23,7 +23,7 @@
 
 1529952509 d:\github\parcial1_arraylist_arch\menu.h
 
-1531337422 source:d:\github\parcial1_arraylist_arch\main.c
+1531345872 source:d:\github\parcial1_arraylist_arch\main.c
 	<stdio.h>
 	<stdlib.h>
 	"General.h"
@@ -31,14 +31,14 @@
 	"Menu.h"
 	"Propietario.h"
 
-1531339734 d:\github\parcial1_arraylist_arch\propietario.h
+1531346380 d:\github\parcial1_arraylist_arch\propietario.h
 	"General.h"
 	"Gestion.h"
 	"Menu.h"
 	"ArrayList.h"
 	<stdlib.h>
 
-1531339603 source:d:\github\parcial1_arraylist_arch\propietario.c
+1531346457 source:d:\github\parcial1_arraylist_arch\propietario.c
 	"Propietario.h"
 	<stdio.h>
 	<string.h>
@@ -104,13 +104,13 @@
 1531279784 c:\github\parcial1_arraylist_arch\gestion.h
 	"ArrayList.h"
 
-1531336745 source:d:\github\parcial1_arraylist_arch\gestion.c
+1531347166 source:d:\github\parcial1_arraylist_arch\gestion.c
 	"Gestion.h"
 	"General.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1531336693 d:\github\parcial1_arraylist_arch\gestion.h
+1531345763 d:\github\parcial1_arraylist_arch\gestion.h
 	"ArrayList.h"
 

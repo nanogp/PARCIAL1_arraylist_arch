@@ -7,44 +7,44 @@
 
 
 /**************************** GETTERS ************************************************************/
-int ePropietario_getIdPropietario(ePropietario* this)
+int ePropietario_getIdPropietario(void* this)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL)
     {
-        returnAux = this->idPropietario;
+        returnAux = ((ePropietario*)this)->idPropietario;
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-char* ePropietario_getNombre(ePropietario* this)
+char* ePropietario_getNombre(void* this)
 {
     char* returnAux = NULL;
     if(this != NULL)
     {
-        returnAux = this->nombre;
+        returnAux = ((ePropietario*)this)->nombre;
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
 
-char* ePropietario_getDireccion(ePropietario* this)
+char* ePropietario_getDireccion(void* this)
 {
     char* returnAux = NULL;
     if(this != NULL)
     {
-        returnAux = this->direccion;
+        returnAux = ((ePropietario*)this)->direccion;
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
 
-float ePropietario_getTarjeta(ePropietario* this)
+float ePropietario_getTarjeta(void* this)
 {
     float returnAux = CHECK_POINTER;
     if(this != NULL)
     {
-        returnAux = this->tarjeta;
+        returnAux = ((ePropietario*)this)->tarjeta;
     }
     return returnAux;
 }
@@ -52,48 +52,48 @@ float ePropietario_getTarjeta(ePropietario* this)
 
 
 /**************************** SETTERS ************************************************************/
-int ePropietario_setIdPropietario(ePropietario* this, int id)
+int ePropietario_setIdPropietario(void* this, int id)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL)
     {
-        this->idPropietario = id;
+        ((ePropietario*)this)->idPropietario = id;
         returnAux = OK;
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
 
-int ePropietario_setNombre(ePropietario* this, char* nombre)
+int ePropietario_setNombre(void* this, char* nombre)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL && nombre != NULL)
     {
-        strcpy(this->nombre, nombre);
+        strcpy(((ePropietario*)this)->nombre, nombre);
         returnAux = OK;
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
 
-int ePropietario_setDireccion(ePropietario* this, char* direccion)
+int ePropietario_setDireccion(void* this, char* direccion)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL && direccion != NULL)
     {
-        strcpy(this->direccion, direccion);
+        strcpy(((ePropietario*)this)->direccion, direccion);
         returnAux = OK;
     }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
 
-int ePropietario_setTarjeta(ePropietario* this, float tarjeta)
+int ePropietario_setTarjeta(void* this, float tarjeta)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL)
     {
-        this->tarjeta = tarjeta;
+        ((ePropietario*)this)->tarjeta = tarjeta;
         returnAux = OK;
     }
     return returnAux;
@@ -102,19 +102,19 @@ int ePropietario_setTarjeta(ePropietario* this, float tarjeta)
 
 
 /**************************** CONSTRUCTORES ******************************************************/
-ePropietario* ePropietario_new()
+void* ePropietario_new()
 {
-    ePropietario* propietario;
+    void* propietario;
 
-    propietario = (ePropietario*) malloc(sizeof(ePropietario));
+    propietario = malloc(sizeof(ePropietario));
 
     return propietario;
 }
 //-----------------------------------------------------------------------------------------------//
 
-ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta)
+void* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta)
 {
-    ePropietario* propietario;
+    void* propietario;
 
     propietario = ePropietario_new();
 
@@ -145,9 +145,9 @@ float ePropietario_pedirTarjeta()
     return pedirFloatValido(PROPIETARIO_MSJ_INGRESE_TARJETA, PROPIETARIO_MSJ_REINGRESE_TARJETA, 0, PROPIETARIO_LARGO_TARJETA);
 }
 //-----------------------------------------------------------------------------------------------//
-ePropietario* ePropietario_pedirPropietario(ArrayList* this)
+void* ePropietario_pedirPropietario(ArrayList* this)
 {
-    ePropietario* propietario;
+    void* propietario;
     char* nombre;
     char* direccion;
     float tarjeta;
@@ -168,7 +168,7 @@ ePropietario* ePropietario_pedirPropietario(ArrayList* this)
 //-----------------------------------------------------------------------------------------------//
 
 /**************************** LISTADO DE DATOS ***************************************************/
-void ePropietario_mostrarUno(ePropietario* this)
+void ePropietario_mostrarUno(void* this)
 {
     if(this != NULL)
     {
@@ -194,7 +194,7 @@ int ePropietario_modificarUno(void* this)
                                             "\n  3. Tarjeta"
                                             "\n  9. FINALIZAR CAMBIOS"
                                             "\n  0. CANCELAR"};
-    ePropietario* registro;
+    void* registro;
     int opcion;
     const int huboCambios = 1;
     char finalizar = 'N';
@@ -259,7 +259,7 @@ int ePropietario_modificarUno(void* this)
 char* ePropietario_parserATexto(void* this, int bufferSize)
 {
     char* returnAux = NULL;
-    ePropietario* propietario;
+    void* propietario;
 
     if(this != NULL)
     {
@@ -286,7 +286,6 @@ char* ePropietario_parserATexto(void* this, int bufferSize)
 void* ePropietario_parserAVoid(char* this, int bufferSize)
 {
     void* returnAux = NULL;
-    ePropietario* propietario;
     int id;
     char nombre[bufferSize];
     char direccion[bufferSize];
