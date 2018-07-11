@@ -313,14 +313,18 @@ char* intToChar(int numero)
    return retorno;
 }
 //-----------------------------------------------------------------------------------------------//
-char* floatToChar(float numero)
+char* floatToChar(float numero, int decimales)
 {
    char cadena[STRING_LARGO_MAX];
+   char mascara[10];
    char* retorno;
 
    retorno = cadena;
 
-   sprintf(retorno, "%.2f", numero);
+   strcpy(mascara, "%.");
+   strcat(mascara, intToChar(decimales));
+   strcat(mascara, "f");
+   sprintf(retorno, mascara, numero);
 
    return retorno;
 }

@@ -255,6 +255,52 @@ int ePropietario_modificarUno(void* this)
     }
     return returnAux;
 }
+//-----------------------------------------------------------------------------------------------//
+char* ePropietario_parserATexto(void* this, int bufferSize)
+{
+    char* returnAux = NULL;
+    ePropietario* propietario;
+
+    if(this != NULL)
+    {
+        returnAux = eString_new(bufferSize);
+
+        if(returnAux != NULL)
+        {
+            propietario = (ePropietario*) this;
+            strcpy(returnAux, "");
+            strcat(returnAux, intToChar(ePropietario_getIdPropietario(propietario)));
+            strcat(returnAux, ",");
+            strcat(returnAux, ePropietario_getNombre(propietario));
+            strcat(returnAux, ",");
+            strcat(returnAux, ePropietario_getDireccion(propietario));
+            strcat(returnAux, ",");
+            strcat(returnAux, floatToChar(ePropietario_getTarjeta(propietario), 0));
+            strcat(returnAux, "\n");
+        }
+    }
+
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
+void* ePropietario_parserAVoid(char* this, int bufferSize)
+{
+    void* returnAux = NULL;
+    ePropietario* propietario;
+    int id;
+    char nombre[bufferSize];
+    char direccion[bufferSize];
+    float tarjeta;
+
+    if(this != NULL)
+    {
+        sscanf(this, "%d,%[^,],%[^,],%f", &id, nombre, direccion, &tarjeta);
+        returnAux = ePropietario_newParam(id, nombre, direccion, tarjeta);
+    }
+
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
 
 /**************************** ORDENAMIENTO *******************************************************/
 int ePropietario_compararPorId(void* this, void* that)

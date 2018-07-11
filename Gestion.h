@@ -65,20 +65,30 @@ int eGestion_guardarArchivoDatos(ArrayList* this,
                                  int sizeOfStruct,
                                  char* titulo,
                                  char* msjListaVacia);
+int eGestion_cargarArchivoTexto(ArrayList* this,
+                                void* (*pParseAVoid)(char*, int),
+                                int (*pComparar)(void*, void*),
+                                char* titulo,
+                                int bufferSize);
 int eGestion_guardarArchivoTexto(ArrayList* this,
-                                 int sizeOfStruct,
+                                 char* (*pParseATexto)(void*, int),
                                  char* titulo,
-                                 char* msjListaVacia);
+                                 char* msjListaVacia,
+                                 int bufferSize);
 int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
 
 /**************************** TITULOS ************************************************************/
 #define GESTION_CARGAR_ARCHIVO_DATOS_TITULO "CARGA ARCHIVO DE DATOS"
 #define GESTION_GUARDAR_ARCHIVO_DATOS_TITULO "GUARDAR ARCHIVO DE DATOS"
+#define GESTION_CARGAR_ARCHIVO_TEXTO_TITULO "CARGA ARCHIVO DE TEXTO"
+#define GESTION_GUARDAR_ARCHIVO_TEXTO_TITULO "GUARDAR ARCHIVO DE TEXTO"
 
 /**************************** MENSAJES INPUT *****************************************************/
 #define GESTION_MSJ_INGRESE_RUTA_DATOS "\nIngrese ruta del archivo de datos:\n"
 #define GESTION_MSJ_REINGRESE_RUTA_DATOS "\nReingrese una ruta valida:\n"
-#define GESTION_MSJ_ARCHIVO_DATOS_ERROR "\nNo pudo abrirse el archivo:\n %s"
+#define GESTION_MSJ_INGRESE_RUTA_TEXTO "\nIngrese ruta del archivo de texto:\n"
+#define GESTION_MSJ_REINGRESE_RUTA_TEXTO "\nReingrese una ruta valida:\n"
+#define GESTION_MSJ_ARCHIVO_ERROR "\nNo pudo abrirse el archivo:\n %s"
 
 /**************************** MENSAJES ERROR *****************************************************/
 

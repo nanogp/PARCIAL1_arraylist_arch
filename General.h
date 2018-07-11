@@ -218,7 +218,7 @@ char* intToChar(int numero);
  * \return char* texto
  *
  */
-char* floatToChar(float numero);
+char* floatToChar(float numero, int decimales);
 //-----------------------------------------------------------------------------------------------//
 /** \brief convierte una cadena en numero entero
  *

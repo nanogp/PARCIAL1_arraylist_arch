@@ -10,8 +10,8 @@ int main()
 {
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"ESTACIONAMIENTO"},
-                           /*cantidad de opciones*/7,
-                           /*codigos*/{1,2,3,7,8,16,
+                           /*cantidad de opciones*/9,
+                           /*codigos*/{1,2,3,7,8,9,10,16,
                            0},
                            /*descripciones*/{"\n 1. Alta Propietario"
                                              "\n 2. Modificacion Propietario"
@@ -21,8 +21,8 @@ int main()
 //                                             "\n 6. Egreso del Automovil"
                                              "\n 7. Cargar Archivo Datos Propietarios"
                                              "\n 8. Guardar Archivo Datos Propietarios"
-//                                             "\n 9. Cargar Archivo CSV Propietarios"
-//                                             "\n10. Guardar Archivo CSV Propietarios"
+                                             "\n 9. Cargar Archivo CSV Propietarios"
+                                             "\n10. Guardar Archivo CSV Propietarios"
 //                                             "\n11. Cargar Archivo Datos Automoviles"
 //                                             "\n12. Guardar Archivo Datos Automoviles"
 //                                             "\n13. Cargar Archivo CSV Automoviles"
@@ -124,10 +124,18 @@ int main()
                                              PROPIETARIO_MSJ_LISTA_VACIA);
                 break;
             case 9:
-
+                eGestion_cargarArchivoTexto(listadoPropietarios,
+                                            ePropietario_parserAVoid,
+                                            ePropietario_compararPorId,
+                                            GESTION_CARGAR_ARCHIVO_TEXTO_TITULO,
+                                            2000);
                 break;
             case 10:
-
+                eGestion_guardarArchivoTexto(listadoPropietarios,
+                                             ePropietario_parserATexto,
+                                             GESTION_GUARDAR_ARCHIVO_TEXTO_TITULO,
+                                             PROPIETARIO_MSJ_LISTA_VACIA,
+                                             2000);
                 break;
             case 11:
 

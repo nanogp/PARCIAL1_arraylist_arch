@@ -56,8 +56,8 @@ ePropietario* ePropietario_pedirPropietario(ArrayList* this);
 
 /**************************** GESTION DE DATOS ***************************************************/
 int ePropietario_modificarUno(void* this);
-char* ePropietario_parserATexto(void* this);
-void* ePropietario_parserAVoid(char* this);
+char* ePropietario_parserATexto(void* this, int bufferSize);
+void* ePropietario_parserAVoid(char* this, int bufferSize);
 
 /**************************** LISTADO DE DATOS ***************************************************/
 void ePropietario_mostrarUno(ePropietario* propietario);
@@ -100,8 +100,8 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this);
 #define PROPIETARIO_MSJ_REGISTRO_MODIFICADO "\n\nPropietario modificado: "
 
 /**************************** LISTADOS ***********************************************************/
-#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d \t %-10s \t %-10s \t %.0f"
-#define PROPIETARIO_MOSTRAR_UNO_CABECERA "\nID \t NOMBRE \t DIRECCION \t TARJETA\n-- \t ------ \t --------- \t -------"
+#define PROPIETARIO_MOSTRAR_UNO_MASCARA "\n%d \t %-10s \t %-20s \t %.0f"
+#define PROPIETARIO_MOSTRAR_UNO_CABECERA "\nID \t NOMBRE \t DIRECCION \t\t TARJETA\n-- \t ------ \t --------- \t\t -------"
 #define PROPIETARIO_MOSTRAR_UNO_PAGINADO 20
 
 /**************************** ORDENAMIENTO *******************************************************/

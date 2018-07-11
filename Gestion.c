@@ -332,13 +332,13 @@ int eGestion_cargarArchivoDatos(ArrayList* this,
 
         limpiarPantallaYMostrarTitulo(titulo);
 
-        ruta = eString_newParam(GESTION_MSJ_INGRESE_RUTA_DATOS, GESTION_MSJ_REINGRESE_RUTA_DATOS, GESTION_RUTA_LARGO_MAX);
+        ruta = eString_newParam(GESTION_MSJ_INGRESE_RUTA_TEXTO, GESTION_MSJ_REINGRESE_RUTA_TEXTO, GESTION_RUTA_LARGO_MAX);
 
         pFile = fopen(ruta, modoLectura);
 
         if(pFile == NULL)
         {
-            printf(GESTION_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+            printf(GESTION_MSJ_ARCHIVO_ERROR, ruta);
         }
         else
         {
@@ -423,7 +423,7 @@ int eGestion_guardarArchivoDatos(ArrayList* this,
 
             if(pFile == NULL)
             {
-                printf(GESTION_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+                printf(GESTION_MSJ_ARCHIVO_ERROR, ruta);
             }
             else
             {
@@ -458,20 +458,106 @@ int eGestion_guardarArchivoDatos(ArrayList* this,
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
+int eGestion_cargarArchivoTexto(ArrayList* this,
+                                void* (*pParseAVoid)(char*,int),
+                                int (*pComparar)(void*, void*),
+                                char* titulo,
+                                int bufferSize)
+{
+    int returnAux = CHECK_POINTER;
+    FILE* pFile;
+    char* ruta;
+    char* modoLectura = "rb";
+    char* buffer;
+    void* pElement;
+    int errorNuevoRegistro = 0;
+    int regProcesados = 0;
+
+    if(this != NULL && (*pComparar) != NULL && (*pParseAVoid)!= NULL && titulo != NULL)
+    {
+        returnAux = CHECK_FILE;
+
+        limpiarPantallaYMostrarTitulo(titulo);
+
+        ruta = eString_newParam(GESTION_MSJ_INGRESE_RUTA_TEXTO, GESTION_MSJ_REINGRESE_RUTA_TEXTO, GESTION_RUTA_LARGO_MAX);
+
+        pFile = fopen(ruta, modoLectura);
+
+        if(pFile == NULL)
+        {
+            printf(GESTION_MSJ_ARCHIVO_ERROR, ruta);
+        }
+        else
+        {
+            if(this->len(this) > 0) //vaciar lista
+            {
+                for(int i=0 ; i<this->len(this) ; i++)
+                {
+                    pElement = this->pop(this, i);
+                    free(pElement);
+                }
+            }
+
+            buffer = eString_new(bufferSize);
+            if(buffer == NULL)
+            {
+                imprimirEnPantalla("\nNo pudo asignarse memoria para el buffer de lectura.");
+            }
+            else
+            {
+                fgets(buffer, bufferSize-1, pFile);
+
+                while(!feof(pFile))
+                {
+                    if(feof(pFile)){break;} //bug ultima lectura doble
+
+                    pElement = (*pParseAVoid)(buffer,bufferSize);
+                    if(pElement == NULL)
+                    {
+                        errorNuevoRegistro++;
+                    }
+                    else
+                    {
+                        this->add(this, pElement);
+                        this->sort(this, (*pComparar), ASC);
+                        regProcesados++;
+                    }
+
+                    fgets(buffer, bufferSize-1, pFile);
+                }
+            };
+            fclose(pFile);
+
+            returnAux = OK;
+
+            printf(MSJ_REG_PROCESADOS, regProcesados);
+            if(errorNuevoRegistro > 0)
+            {
+                printf(MSJ_NUEVO_REG_ERROR, errorNuevoRegistro);
+            }
+        }//endif pFile
+    }//endif this
+
+    pausa();
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
 int eGestion_guardarArchivoTexto(ArrayList* this,
-                                 char* (*pParseATexto)(void*),
+                                 char* (*pParseATexto)(void*, int),
                                  char* titulo,
-                                 char* msjListaVacia)
+                                 char* msjListaVacia,
+                                 int bufferSize)
 {
     int returnAux = CHECK_POINTER;
     FILE* pFile;
     char* ruta;
     char* modoEscritura = "w";
     void* pElement;
+    char* buffer;
     int errorLecturaRegistro = 0;
     int regProcesados = 0;
 
-    if(this != NULL && titulo != NULL && msjListaVacia != NULL)
+    if(this != NULL && (*pParseATexto) != NULL && titulo != NULL && msjListaVacia != NULL)
     {
         limpiarPantallaYMostrarTitulo(GESTION_GUARDAR_ARCHIVO_DATOS_TITULO);
 
@@ -485,17 +571,18 @@ int eGestion_guardarArchivoTexto(ArrayList* this,
 
             if(pFile == NULL)
             {
-                printf(GESTION_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+                printf(GESTION_MSJ_ARCHIVO_ERROR, ruta);
             }
             else
             {
                 for(int i=0 ; i<this->len(this) ; i++)
                 {
                     pElement = this->get(this, i);
+                    buffer = (*pParseATexto)(pElement,bufferSize);
 
-                    if(pElement != NULL)
+                    if(pElement != NULL && buffer != NULL)
                     {
-                        fwrite(pElement, sizeOfStruct, 1, pFile);
+                        fputs(buffer, pFile);
                         regProcesados++;
                     }
                     else
