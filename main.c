@@ -11,7 +11,8 @@ int main()
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"ESTACIONAMIENTO"},
                            /*cantidad de opciones*/7,
-                           /*codigos*/{1,2,3,7,8,16,0},
+                           /*codigos*/{1,2,3,7,8,16,
+                           0},
                            /*descripciones*/{"\n 1. Alta Propietario"
                                              "\n 2. Modificacion Propietario"
                                              "\n 3. Baja Propietario"

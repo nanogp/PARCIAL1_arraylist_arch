@@ -28,26 +28,6 @@ typedef struct
     char nombre[PROPIETARIO_LARGO_NOMBRE];
     char direccion[PROPIETARIO_LARGO_DIRECCION];
     float tarjeta;
-    //------------list
-    void (*print)();
-    //------------sort
-    int (*compare)();
-    //------------getters
-    int (*getId)();
-    char* (*getNombre)();
-    char* (*getDireccion)();
-    float (*getTarjeta)();
-    //------------setters
-    int (*setId)();
-    int (*setNombre)();
-    int (*setDireccion)();
-    int (*setTarjeta)();
-    //------------input
-    int (*nextId)();
-    char* (*inputNombre)();
-    char* (*inputDireccion)();
-    float (*inputTarjeta)();
-
 }ePropietario;
 
 
@@ -64,6 +44,7 @@ int ePropietario_setDireccion(ePropietario* this, char* direccion);
 int ePropietario_setTarjeta(ePropietario* this, float tarjeta);
 
 /**************************** CONSTRUCTORES ******************************************************/
+void ePropietario_setMedotos(ePropietario* propietario);
 ePropietario* ePropietario_new();
 ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta);
 
@@ -75,6 +56,8 @@ ePropietario* ePropietario_pedirPropietario(ArrayList* this);
 
 /**************************** GESTION DE DATOS ***************************************************/
 int ePropietario_modificarUno(void* this);
+char* ePropietario_parserATexto(void* this);
+void* ePropietario_parserAVoid(char* this);
 
 /**************************** LISTADO DE DATOS ***************************************************/
 void ePropietario_mostrarUno(ePropietario* propietario);

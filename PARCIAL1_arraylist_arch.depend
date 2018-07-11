@@ -1,20 +1,20 @@
 # depslib dependency file v1.0
-1530915187 source:d:\github\parcial1_arraylist_arch\arraylist.c
+1531329657 source:d:\github\parcial1_arraylist_arch\arraylist.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"ArrayList.h"
 
-1530915059 d:\github\parcial1_arraylist_arch\arraylist.h
+1531329657 d:\github\parcial1_arraylist_arch\arraylist.h
 	"General.h"
 
-1528325451 source:d:\github\parcial1_arraylist_arch\general.c
+1531329657 source:d:\github\parcial1_arraylist_arch\general.c
 	"General.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1530839600 d:\github\parcial1_arraylist_arch\general.h
+1531329657 d:\github\parcial1_arraylist_arch\general.h
 
 1529956910 source:d:\github\parcial1_arraylist_arch\menu.c
 	"Menu.h"
@@ -23,20 +23,22 @@
 
 1529952509 d:\github\parcial1_arraylist_arch\menu.h
 
-1530914794 source:d:\github\parcial1_arraylist_arch\main.c
+1531334275 source:d:\github\parcial1_arraylist_arch\main.c
 	<stdio.h>
 	<stdlib.h>
 	"General.h"
+	"Gestion.h"
 	"Menu.h"
 	"Propietario.h"
 
-1530916447 d:\github\parcial1_arraylist_arch\propietario.h
+1531333831 d:\github\parcial1_arraylist_arch\propietario.h
 	"General.h"
+	"Gestion.h"
 	"Menu.h"
 	"ArrayList.h"
 	<stdlib.h>
 
-1530916437 source:d:\github\parcial1_arraylist_arch\propietario.c
+1531334466 source:d:\github\parcial1_arraylist_arch\propietario.c
 	"Propietario.h"
 	<stdio.h>
 	<string.h>
@@ -100,5 +102,15 @@
 	<string.h>
 
 1531279784 c:\github\parcial1_arraylist_arch\gestion.h
+	"ArrayList.h"
+
+1531334823 source:d:\github\parcial1_arraylist_arch\gestion.c
+	"Gestion.h"
+	"General.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1531334544 d:\github\parcial1_arraylist_arch\gestion.h
 	"ArrayList.h"
 

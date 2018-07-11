@@ -108,26 +108,6 @@ ePropietario* ePropietario_new()
 
     propietario = (ePropietario*) malloc(sizeof(ePropietario));
 
-    if(propietario != NULL)
-    {
-        //------------list
-        propietario->print              = ePropietario_mostrarUno;
-        //------------getters
-        propietario->getId              = ePropietario_getIdPropietario;
-        propietario->getNombre          = ePropietario_getNombre;
-        propietario->getDireccion       = ePropietario_getDireccion;
-        propietario->getTarjeta         = ePropietario_getTarjeta;
-        //------------setters
-        propietario->setId              = ePropietario_setIdPropietario;
-        propietario->setNombre          = ePropietario_setNombre;
-        propietario->setDireccion       = ePropietario_setDireccion;
-        //propietario->setTarjeta         = ePropietario_setTarjeta;
-        //------------input
-        propietario->inputNombre        = ePropietario_pedirNombre;
-        propietario->inputDireccion     = ePropietario_pedirDireccion;
-        propietario->inputTarjeta       = ePropietario_pedirTarjeta;
-    }
-
     return propietario;
 }
 //-----------------------------------------------------------------------------------------------//
@@ -140,9 +120,9 @@ ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float
 
     if(propietario != NULL)
     {
-        propietario->setId(propietario, id);
-        propietario->setNombre(propietario, nombre);
-        propietario->setDireccion(propietario, direccion);
+        ePropietario_setIdPropietario(propietario, id);
+        ePropietario_setNombre(propietario, nombre);
+        ePropietario_setDireccion(propietario, direccion);
         ePropietario_setTarjeta(propietario, tarjeta);
     }
     return propietario;
@@ -193,10 +173,10 @@ void ePropietario_mostrarUno(ePropietario* this)
     if(this != NULL)
     {
         printf(PROPIETARIO_MOSTRAR_UNO_MASCARA,
-               this->getId(this),
-               this->getNombre(this),
-               this->getDireccion(this),
-               this->getTarjeta(this));
+               ePropietario_getIdPropietario(this),
+               ePropietario_getNombre(this),
+               ePropietario_getDireccion(this),
+               ePropietario_getTarjeta(this));
     }
 }
 //-----------------------------------------------------------------------------------------------//
@@ -229,22 +209,22 @@ int ePropietario_modificarUno(void* this)
             imprimirEnPantalla(MSJ_DATOS_A_MODIFICAR);
 
             imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
-            registro->print(registro);
+            ePropietario_mostrarUno(registro);
             saltoDeLinea();
 
             opcion = eMenu_pedirOpcion(&menuModificar);
             switch(opcion)
             {
                 case 1:
-                    registro->setNombre(ePropietario_pedirNombre());
+                    ePropietario_setNombre(registro, ePropietario_pedirNombre());
                     returnAux = huboCambios;
                     break;
                 case 2:
-                    registro->setDireccion(ePropietario_pedirDireccion());
+                    ePropietario_setDireccion(registro, ePropietario_pedirDireccion());
                     returnAux = huboCambios;
                     break;
                 case 3:
-                    registro->setTarjeta(ePropietario_pedirTarjeta());
+                    ePropietario_setTarjeta(registro, ePropietario_pedirTarjeta());
                     returnAux = huboCambios;
                     break;
                 case 4:
@@ -291,12 +271,10 @@ int ePropietario_compararPorId(void* this, void* that)
 int ePropietario_compararPorNombre(void* this, void* that)
 {
     int returnAux;
-    ePropietario* pThis = (ePropietario*) this;
-    ePropietario* pThat = (ePropietario*) that;
 
-    if(pThis != NULL && pThat != NULL)
+    if(this != NULL && that != NULL)
     {
-        returnAux = strcmp(pThis->getNombre(pThis), pThat->getNombre(pThat));
+        returnAux = strcmp(ePropietario_getNombre((ePropietario*)this), ePropietario_getNombre((ePropietario*)that));
     }
     return returnAux;
 }
@@ -304,12 +282,10 @@ int ePropietario_compararPorNombre(void* this, void* that)
 int ePropietario_compararPorDireccion(void* this, void* that)
 {
     int returnAux;
-    ePropietario* pThis = (ePropietario*) this;
-    ePropietario* pThat = (ePropietario*) that;
 
-    if(pThis != NULL && pThat != NULL)
+    if(this != NULL && that != NULL)
     {
-        returnAux = strcmp(pThis->getDireccion(pThis), pThat->getDireccion(pThat));
+        returnAux = strcmp(ePropietario_getDireccion((ePropietario*)this), ePropietario_getDireccion((ePropietario*)that));
     }
     return returnAux;
 }
@@ -317,12 +293,10 @@ int ePropietario_compararPorDireccion(void* this, void* that)
 int ePropietario_compararPorTarjeta(void* this, void* that)
 {
     int returnAux;
-    ePropietario* pThis = (ePropietario*) this;
-    ePropietario* pThat = (ePropietario*) that;
 
-    if(pThis != NULL && pThat != NULL)
+    if(this != NULL && that != NULL)
     {
-        returnAux = pThis->getTarjeta(pThis) - pThat->getTarjeta(pThat);
+        returnAux = ePropietario_getTarjeta((ePropietario*)this) - ePropietario_getTarjeta((ePropietario*)that);
     }
     return returnAux;
 }

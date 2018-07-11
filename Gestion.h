@@ -65,6 +65,10 @@ int eGestion_guardarArchivoDatos(ArrayList* this,
                                  int sizeOfStruct,
                                  char* titulo,
                                  char* msjListaVacia);
+int eGestion_guardarArchivoTexto(ArrayList* this,
+                                 int sizeOfStruct,
+                                 char* titulo,
+                                 char* msjListaVacia);
 int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
 
 /**************************** TITULOS ************************************************************/
@@ -79,7 +83,7 @@ int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, cha
 /**************************** MENSAJES ERROR *****************************************************/
 
 /**************************** MENSAJES INFO ******************************************************/
-#define GESTION_MSJ_REGISTRO_ACTUAL "\n\nREGISTRO ACTUAL:\n----------------"
+#define GESTION_MSJ_REGISTRO_ACTUAL "\n\nREGISTRO ORIGEN:\n----------------"
 #define GESTION_MSJ_REGISTRO_MODIFICADO "\n\nREGISTRO MODIFICADO:\n--------------------"
 
 /**************************** ORDENAMIENTO *******************************************************/

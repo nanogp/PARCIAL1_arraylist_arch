@@ -178,6 +178,7 @@ int eGestion_baja(ArrayList* this,
             while(pElement == NULL)
             {
                 eGestion_listado(this, (*pMostrar), tituloListado, cabecera, msjListaVacia, paginado);
+                saltoDeLinea();
                 imprimirTitulo(tituloBaja);
                 pElement = eGestion_pedirIdYBuscar(this, (*pGetId), msjIngresoId, msjReingresoId, idMin, idMax);
                 if(pElement == NULL)
@@ -231,7 +232,7 @@ int eGestion_modificacion(ArrayList* this,
                           int paginado)
 {
     int returnAux = CHECK_POINTER;
-    void* pElement;
+    void* pElement = NULL;
     void* tempElement;
     int index;
     char confirmacion;
@@ -243,13 +244,17 @@ int eGestion_modificacion(ArrayList* this,
     {
         if(!eGestion_informarListadoVacio(this, msjListaVacia))
         {
-            eGestion_listado(this, (*pMostrar), tituloListado, cabecera, msjListaVacia, paginado);
-
-            imprimirTitulo(tituloModificacion);
-
             while(pElement == NULL)
             {
+                eGestion_listado(this, (*pMostrar), tituloListado, cabecera, msjListaVacia, paginado);
+                saltoDeLinea();
+                imprimirTitulo(tituloModificacion);
                 pElement = eGestion_pedirIdYBuscar(this, (*pGetId), msjIngresoId, msjReingresoId, idMin, idMax);
+                if(pElement == NULL)
+                {
+                    imprimirEnPantalla("\nNo se encontro el ID ingresado");
+                    pausa();
+                }
             }
 
             tempElement = (*pConstructor)();
@@ -292,7 +297,6 @@ int eGestion_modificacion(ArrayList* this,
                 this->remove(this, index);
                 free(pElement);
                 this->sort(this, (*pComparar), ASC);
-                imprimirEnPantalla(msjOk);
                 imprimirEnPantalla(msjOk);
             }
             else
@@ -401,6 +405,68 @@ int eGestion_guardarArchivoDatos(ArrayList* this,
     FILE* pFile;
     char* ruta;
     char* modoEscritura = "wb";
+    void* pElement;
+    int errorLecturaRegistro = 0;
+    int regProcesados = 0;
+
+    if(this != NULL && titulo != NULL && msjListaVacia != NULL)
+    {
+        limpiarPantallaYMostrarTitulo(GESTION_GUARDAR_ARCHIVO_DATOS_TITULO);
+
+        if(!eGestion_informarListadoVacio(this, msjListaVacia))
+        {
+            returnAux = CHECK_FILE;
+
+            ruta = eString_newParam(GESTION_MSJ_INGRESE_RUTA_DATOS, GESTION_MSJ_REINGRESE_RUTA_DATOS, 255);
+
+            pFile = fopen(ruta, modoEscritura);
+
+            if(pFile == NULL)
+            {
+                printf(GESTION_MSJ_ARCHIVO_DATOS_ERROR, ruta);
+            }
+            else
+            {
+                for(int i=0 ; i<this->len(this) ; i++)
+                {
+                    pElement = this->get(this, i);
+
+                    if(pElement != NULL)
+                    {
+                        fwrite(pElement, sizeOfStruct, 1, pFile);
+                        regProcesados++;
+                    }
+                    else
+                    {
+                        errorLecturaRegistro++;
+                    };
+                }
+                fclose(pFile);
+
+                returnAux = OK;
+
+                printf(MSJ_REG_PROCESADOS, regProcesados);
+                if(errorLecturaRegistro > 0)
+                {
+                    printf("\nHubo errores leyendo %d pElements", errorLecturaRegistro);
+                }
+            }//endif vacio
+        }//endif pFile
+    }//endif this
+
+    pausa();
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
+int eGestion_guardarArchivoTexto(ArrayList* this,
+                                 char* (*pParseATexto)(void*),
+                                 char* titulo,
+                                 char* msjListaVacia)
+{
+    int returnAux = CHECK_POINTER;
+    FILE* pFile;
+    char* ruta;
+    char* modoEscritura = "w";
     void* pElement;
     int errorLecturaRegistro = 0;
     int regProcesados = 0;
