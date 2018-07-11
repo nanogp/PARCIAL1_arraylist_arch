@@ -4,6 +4,7 @@
 
 /**************************** INCLUSION DE LIBRERIAS PERSONALES **********************************/
 #include "General.h"
+#include "Gestion.h"
 #include "Menu.h"
 #include "ArrayList.h"
 
@@ -66,32 +67,19 @@ int ePropietario_setTarjeta(ePropietario* this, float tarjeta);
 ePropietario* ePropietario_new();
 ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta);
 
-/**************************** BUSQUEDA ***********************************************************/
-int ePropietario_siguienteId(ArrayList* this);
-int ePropietario_informarListadoVacio(ArrayList* this);
-ePropietario* ePropietario_buscarPorId(ArrayList* this, int idPropietario);
-ePropietario* ePropietario_pedirIdYBuscar(ArrayList* this);
-
 /**************************** ENTRADA DE DATOS ***************************************************/
 char* ePropietario_pedirNombre();
 char* ePropietario_pedirDireccion();
 float ePropietario_pedirTarjeta();
 ePropietario* ePropietario_pedirPropietario(ArrayList* this);
 
+/**************************** GESTION DE DATOS ***************************************************/
+int ePropietario_modificarUno(void* this);
+
 /**************************** LISTADO DE DATOS ***************************************************/
 void ePropietario_mostrarUno(ePropietario* propietario);
 
-/**************************** GESTION DE DATOS ***************************************************/
-int ePropietario_gestionAlta(ArrayList* this);
-int ePropietario_gestionModificacion(ArrayList* this);
-int ePropietario_gestionBaja(ArrayList* this);
-int ePropietario_gestionListado(ArrayList* this);
-int ePropietario_gestionCargarArchivoDatos(ArrayList* this);
-int ePropietario_gestionGuardarArchivoDatos(ArrayList* this);
-
-
 /**************************** ORDENAMIENTO *******************************************************/
-int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nroCampo);
 int ePropietario_compararPorId(void* this, void* that);
 int ePropietario_compararPorNombre(void* this, void* that);
 int ePropietario_compararPorDireccion(void* this, void* that);

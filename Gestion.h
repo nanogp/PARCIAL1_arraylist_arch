@@ -40,15 +40,19 @@ int eGestion_baja(ArrayList* this,
                   int idMax,
                   int paginado);
 int eGestion_modificacion(ArrayList* this,
+                          int (*pModificar)(void*),
                           void (*pMostrar)(void*),
+                          int (*pGetId)(void*),
+                          void* (*pConstructor)(),
                           int (*pComparar)(void*, void*),
                           int sizeOfStruct,
                           char* tituloModificacion,
                           char* tituloListado,
                           char* cabecera,
                           char* msjListaVacia,
-                          char* msjConfirmar,
                           char* msjOk,
+                          char* msjIngresoId,
+                          char* msjReingresoId,
                           int idMin,
                           int idMax,
                           int paginado);
@@ -75,6 +79,8 @@ int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, cha
 /**************************** MENSAJES ERROR *****************************************************/
 
 /**************************** MENSAJES INFO ******************************************************/
+#define GESTION_MSJ_REGISTRO_ACTUAL "\n\nREGISTRO ACTUAL:\n----------------"
+#define GESTION_MSJ_REGISTRO_MODIFICADO "\n\nREGISTRO MODIFICADO:\n--------------------"
 
 /**************************** ORDENAMIENTO *******************************************************/
 

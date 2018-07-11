@@ -39,6 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="General.h" />
+		<Unit filename="Gestion.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Gestion.h" />
 		<Unit filename="Menu.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -48,9 +52,6 @@
 		</Unit>
 		<Unit filename="Propietario.h" />
 		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="prueba.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

@@ -112,8 +112,6 @@ ePropietario* ePropietario_new()
     {
         //------------list
         propietario->print              = ePropietario_mostrarUno;
-        //------------sort
-        propietario->compare            = ePropietario_compararPorCampo;
         //------------getters
         propietario->getId              = ePropietario_getIdPropietario;
         propietario->getNombre          = ePropietario_getNombre;
@@ -125,7 +123,6 @@ ePropietario* ePropietario_new()
         propietario->setDireccion       = ePropietario_setDireccion;
         //propietario->setTarjeta         = ePropietario_setTarjeta;
         //------------input
-        propietario->nextId             = ePropietario_siguienteId;
         propietario->inputNombre        = ePropietario_pedirNombre;
         propietario->inputDireccion     = ePropietario_pedirDireccion;
         propietario->inputTarjeta       = ePropietario_pedirTarjeta;
@@ -146,90 +143,11 @@ ePropietario* ePropietario_newParam(int id, char* nombre, char* direccion, float
         propietario->setId(propietario, id);
         propietario->setNombre(propietario, nombre);
         propietario->setDireccion(propietario, direccion);
-        //propietario->setTarjeta(propietario, tarjeta);
         ePropietario_setTarjeta(propietario, tarjeta);
     }
     return propietario;
 }
 //-----------------------------------------------------------------------------------------------//
-
-
-/**************************** BUSQUEDA ***********************************************************/
-int ePropietario_siguienteId(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
-    ePropietario* propietario;
-
-    if(this != NULL)
-    {
-        returnAux = 0;
-        for(int i=0 ; i<this->len(this) ; i++)
-        {
-            propietario = (ePropietario*) this->get(this, i);
-
-            if(propietario->getId(propietario) > returnAux)
-            {
-                returnAux = propietario->getId(propietario);
-            }
-        }
-
-    }
-    return (returnAux+1);
-}
-//-----------------------------------------------------------------------------------------------//
-int ePropietario_informarListadoVacio(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
-    if(this != NULL)
-    {
-        returnAux = this->isEmpty(this);
-
-        if(returnAux == 1)
-        {
-            imprimirEnPantalla(PROPIETARIO_MSJ_LISTA_VACIA);
-        }
-    }
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-
-ePropietario* ePropietario_buscarPorId(ArrayList* this, int idPropietario)
-{
-    ePropietario* propietario = NULL;
-    if(this != NULL)
-    {
-        for(int i=0 ; i<this->len(this) ; i++)
-        {
-            propietario = (ePropietario*) this->get(this, i);
-
-            if(propietario->getId(propietario) == idPropietario)
-            {
-                break;
-            }
-            else
-            {
-                propietario = NULL;
-            }
-        }
-    }
-    return propietario;
-}
-//-----------------------------------------------------------------------------------------------//
-
-ePropietario* ePropietario_pedirIdYBuscar(ArrayList* this)
-{
-    ePropietario* propietario = NULL;
-    int id;
-
-    if(this != NULL)
-    {
-        id = pedirIntValido(PROPIETARIO_MSJ_INGRESE_ID, PROPIETARIO_MSJ_REINGRESE_ID, PROPIETARIO_ID_MIN, PROPIETARIO_ID_MAX);
-        propietario = ePropietario_buscarPorId(this, id);
-    }
-    return propietario;
-}
-//-----------------------------------------------------------------------------------------------//
-
 
 /**************************** ENTRADA DE DATOS ***************************************************/
 char* ePropietario_pedirNombre()
@@ -260,7 +178,10 @@ ePropietario* ePropietario_pedirPropietario(ArrayList* this)
         direccion = ePropietario_pedirDireccion();
         tarjeta = ePropietario_pedirTarjeta();
 
-        propietario = ePropietario_newParam(ePropietario_siguienteId(this),nombre,direccion,tarjeta);
+        propietario = ePropietario_newParam(eGestion_siguienteId(this, ePropietario_getIdPropietario),
+                                            nombre,
+                                            direccion,
+                                            tarjeta);
     }
     return propietario;
 }
@@ -281,301 +202,88 @@ void ePropietario_mostrarUno(ePropietario* this)
 //-----------------------------------------------------------------------------------------------//
 
 /**************************** GESTION DE DATOS ***************************************************/
-int ePropietario_gestionAlta(ArrayList* this)
+int ePropietario_modificarUno(void* this)
 {
     int returnAux = CHECK_POINTER;
+    eMenu menuModificar = {/*titulo del menu*/{"Que desea modificar?"},
+                           /*cantidad de opciones*/5,
+                           /*codigos*/{1,2,3,
+                                       9,0},
+                           /*descripciones*/"\n  1. Nombre"
+                                            "\n  2. Direccion"
+                                            "\n  3. Tarjeta"
+                                            "\n  9. FINALIZAR CAMBIOS"
+                                            "\n  0. CANCELAR"};
     ePropietario* registro;
-    char confirmacion;
+    int opcion;
+    const int huboCambios = 1;
+    char finalizar = 'N';
 
-    if(this != NULL)
-    {
-        limpiarPantallaYMostrarTitulo(PROPIETARIO_ALTA_TITULO);
-
-        registro = ePropietario_pedirPropietario(this);
-
-        if(registro != NULL)
-        {
-            imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
-            registro->print(registro);
-            confirmacion = pedirConfirmacion(MSJ_CONFIRMA_CORRECTOS);
-            returnAux = OK;
-        }
-        else
-        {
-            imprimirEnPantalla("\nError al setear datos en registro nuevo");
-            confirmacion = 'N';
-        }
-
-
-        if(confirmacion == 'S')
-        {
-            this->add(this, registro);
-            this->sort(this, ePropietario_compararPorId, ASC);
-            imprimirEnPantalla(PROPIETARIO_MSJ_ALTA_OK);
-        }
-        else
-        {
-            imprimirEnPantalla(MSJ_CANCELO_GESTION);
-        }
-
-        pausa();
-
-    }
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-
-int ePropietario_modificacion(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
     if(this != NULL)
     {
         returnAux = OK;
-    }
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-
-int ePropietario_gestionBaja(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
-    ePropietario* registro = NULL;
-    char confirmacion;
-
-    if(this != NULL)
-    {
-        limpiarPantallaYMostrarTitulo(PROPIETARIO_BAJA_TITULO);
-
-        if(!ePropietario_informarListadoVacio(this))
+        registro = (ePropietario*) this;
+        do
         {
-            ePropietario_gestionListado(this);
-
-            imprimirTitulo(PROPIETARIO_BAJA_TITULO);
-
-            while(registro == NULL)
-            {
-                registro = ePropietario_pedirIdYBuscar(this);
-            }
+            limpiarPantallaYMostrarTitulo(MSJ_MODIFICANDO_REGISTRO);
+            imprimirEnPantalla(MSJ_DATOS_A_MODIFICAR);
 
             imprimirEnPantalla(PROPIETARIO_MOSTRAR_UNO_CABECERA);
             registro->print(registro);
-            confirmacion = pedirConfirmacion(PROPIETARIO_MSJ_CONFIRMAR_BAJA);
+            saltoDeLinea();
 
-            if(confirmacion == 'S')
+            opcion = eMenu_pedirOpcion(&menuModificar);
+            switch(opcion)
             {
-                this->remove(this, this->indexOf(this, registro));
-                this->sort(this, ePropietario_compararPorId, ASC);
-                imprimirEnPantalla(PROPIETARIO_MSJ_BAJA_OK);
+                case 1:
+                    registro->setNombre(ePropietario_pedirNombre());
+                    returnAux = huboCambios;
+                    break;
+                case 2:
+                    registro->setDireccion(ePropietario_pedirDireccion());
+                    returnAux = huboCambios;
+                    break;
+                case 3:
+                    registro->setTarjeta(ePropietario_pedirTarjeta());
+                    returnAux = huboCambios;
+                    break;
+                case 4:
+                    returnAux = huboCambios;
+                    break;
+                case 5:
+                    returnAux = huboCambios;
+                    break;
+                case 6:
+                    returnAux = huboCambios;
+                    break;
+                case 7:
+                    returnAux = huboCambios;
+                    break;
+                case 8:
+                    returnAux = huboCambios;
+                    break;
+                case 9:
+                    finalizar = 'S';
+                    break;
+                case 0:
+                    finalizar = 'S';
+                    returnAux = OK;
+                    break;
             }
-            else
-            {
-                imprimirEnPantalla(MSJ_CANCELO_GESTION);
-            }
-            returnAux = OK;
         }
-
-        pausa();
-
+        while(finalizar == 'N');
     }
     return returnAux;
 }
-//-----------------------------------------------------------------------------------------------//
-int ePropietario_gestionListado(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
-    if(this != NULL)
-    {
-        returnAux = OK;
-
-        limpiarPantallaYMostrarTitulo(PROPIETARIO_LISTADO_TITULO);
-
-        if(!ePropietario_informarListadoVacio(this))
-        {
-            returnAux = this->print(this, ePropietario_mostrarUno, PROPIETARIO_MOSTRAR_UNO_CABECERA, PROPIETARIO_MOSTRAR_UNO_PAGINADO);
-        }
-    }
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-#define PROPIETARIO_CARGAR_ARCHIVO_DATOS_TITULO "CARGA ARCHIVO DE DATOS"
-#define PROPIETARIO_MSJ_INGRESE_RUTA_DATOS "\nIngrese ruta del archivo de datos:\n"
-#define PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS "\nReingrese una ruta valida:\n"
-#define PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR "\nNo pudo abrirse el archivo:\n %s"
-int ePropietario_gestionCargarArchivoDatos(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
-    FILE* pFile;
-    char* ruta;
-    char* modoLectura = "rb";
-    ePropietario* registro;
-    int errorNuevoRegistro = 0;
-    int regProcesados = 0;
-
-    if(this != NULL)
-    {
-        returnAux = CHECK_FILE;
-
-        limpiarPantallaYMostrarTitulo(PROPIETARIO_CARGAR_ARCHIVO_DATOS_TITULO);
-
-        ruta = eString_newParam(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
-
-        pFile = fopen(ruta, modoLectura);
-
-        if(pFile == NULL)
-        {
-            printf(PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR, ruta);
-        }
-        else
-        {
-            if(this->len(this) > 0) //vaciar lista
-            {
-                for(int i=0 ; i<this->len(this) ; i++)
-                {
-                    registro = this->pop(this, i);
-                    free(registro);
-                }
-            }
-
-            registro = ePropietario_new();
-            if(registro != NULL)
-            {
-                fread(registro, sizeof(ePropietario), 1, pFile);
-            }
-            else
-            {
-                errorNuevoRegistro++;
-            };
-
-            while(!feof(pFile))
-            {
-
-                if(feof(pFile)){break;} //bug ultima lectura doble
-
-                this->add(this, registro);
-                this->sort(this, ePropietario_compararPorId, ASC);
-                regProcesados++;
-
-                registro = ePropietario_new();
-                if(registro != NULL)
-                {
-                    fread(registro, sizeof(ePropietario), 1, pFile);
-                }
-                else
-                {
-                    errorNuevoRegistro++;
-                };
-            }
-            fclose(pFile);
-
-            returnAux = OK;
-
-            printf(MSJ_REG_PROCESADOS, regProcesados);
-            if(errorNuevoRegistro > 0)
-            {
-                printf(MSJ_NUEVO_REG_ERROR, errorNuevoRegistro);
-            }
-        }//endif pFile
-    }//endif this
-
-    pausa();
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-#define PROPIETARIO_GUARDAR_ARCHIVO_DATOS_TITULO "GUARDAR ARCHIVO DE DATOS"
-int ePropietario_gestionGuardarArchivoDatos(ArrayList* this)
-{
-    int returnAux = CHECK_POINTER;
-    FILE* pFile;
-    char* ruta;
-    char* modoEscritura = "wb";
-    ePropietario* registro;
-    int errorLecturaRegistro = 0;
-    int regProcesados = 0;
-
-    if(this != NULL)
-    {
-        limpiarPantallaYMostrarTitulo(PROPIETARIO_GUARDAR_ARCHIVO_DATOS_TITULO);
-
-        if(!ePropietario_informarListadoVacio(this))
-        {
-            returnAux = CHECK_FILE;
-
-            ruta = eString_newParam(PROPIETARIO_MSJ_INGRESE_RUTA_DATOS, PROPIETARIO_MSJ_REINGRESE_RUTA_DATOS, 255);
-
-            pFile = fopen(ruta, modoEscritura);
-
-            if(pFile == NULL)
-            {
-                printf(PROPIETARIO_MSJ_ARCHIVO_DATOS_ERROR, ruta);
-            }
-            else
-            {
-                for(int i=0 ; i<this->len(this) ; i++)
-                {
-                    registro = (ePropietario*) this->get(this, i);
-
-                    if(registro != NULL)
-                    {
-                        fwrite(registro, sizeof(ePropietario), 1, pFile);
-                        regProcesados++;
-                    }
-                    else
-                    {
-                        errorLecturaRegistro++;
-                    };
-                }
-                fclose(pFile);
-
-                returnAux = OK;
-
-                printf(MSJ_REG_PROCESADOS, regProcesados);
-                if(errorLecturaRegistro > 0)
-                {
-                    printf("\nHubo errores leyendo %d registros", errorLecturaRegistro);
-                }
-            }//endif vacio
-        }//endif pFile
-    }//endif this
-
-    pausa();
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
 
 /**************************** ORDENAMIENTO *******************************************************/
-int ePropietario_compararPorCampo(ePropietario* this, ePropietario* that, int nroCampo)
-{
-    int returnAux;
-    if(this != NULL && that != NULL)
-    {
-        switch(nroCampo)
-        {
-            case 1:
-                returnAux = this->getId(this) - that->getId(that);
-                break;
-            case 2:
-                returnAux = strcmp(this->getNombre(this), that->getNombre(that));
-                break;
-            case 3:
-                returnAux = strcmp(this->getDireccion(this), that->getDireccion(that));
-                break;
-            case 4:
-                returnAux = this->getTarjeta(this) - that->getTarjeta(that);
-                break;
-        }
-    }
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
 int ePropietario_compararPorId(void* this, void* that)
 {
     int returnAux;
-    ePropietario* thisP = (ePropietario*) this;
-    ePropietario* thatP = (ePropietario*) that;
 
-    if(thisP != NULL && thatP != NULL)
+    if(this != NULL && that != NULL)
     {
-        returnAux = thisP->getId(thisP) - thatP->getId(thatP);
+        returnAux = eGestion_compararPorId(this, that, ePropietario_getIdPropietario);
     }
     return returnAux;
 }
@@ -583,12 +291,12 @@ int ePropietario_compararPorId(void* this, void* that)
 int ePropietario_compararPorNombre(void* this, void* that)
 {
     int returnAux;
-    ePropietario* thisP = (ePropietario*) this;
-    ePropietario* thatP = (ePropietario*) that;
+    ePropietario* pThis = (ePropietario*) this;
+    ePropietario* pThat = (ePropietario*) that;
 
-    if(thisP != NULL && thatP != NULL)
+    if(pThis != NULL && pThat != NULL)
     {
-        returnAux = strcmp(thisP->getNombre(thisP), thatP->getNombre(thatP));
+        returnAux = strcmp(pThis->getNombre(pThis), pThat->getNombre(pThat));
     }
     return returnAux;
 }
@@ -596,12 +304,12 @@ int ePropietario_compararPorNombre(void* this, void* that)
 int ePropietario_compararPorDireccion(void* this, void* that)
 {
     int returnAux;
-    ePropietario* thisP = (ePropietario*) this;
-    ePropietario* thatP = (ePropietario*) that;
+    ePropietario* pThis = (ePropietario*) this;
+    ePropietario* pThat = (ePropietario*) that;
 
-    if(thisP != NULL && thatP != NULL)
+    if(pThis != NULL && pThat != NULL)
     {
-        returnAux = strcmp(thisP->getDireccion(thisP), thatP->getDireccion(thatP));
+        returnAux = strcmp(pThis->getDireccion(pThis), pThat->getDireccion(pThat));
     }
     return returnAux;
 }
@@ -609,12 +317,12 @@ int ePropietario_compararPorDireccion(void* this, void* that)
 int ePropietario_compararPorTarjeta(void* this, void* that)
 {
     int returnAux;
-    ePropietario* thisP = (ePropietario*) this;
-    ePropietario* thatP = (ePropietario*) that;
+    ePropietario* pThis = (ePropietario*) this;
+    ePropietario* pThat = (ePropietario*) that;
 
-    if(thisP != NULL && thatP != NULL)
+    if(pThis != NULL && pThat != NULL)
     {
-        returnAux = thisP->getTarjeta(thisP) - thatP->getTarjeta(thatP);
+        returnAux = pThis->getTarjeta(pThis) - pThat->getTarjeta(pThat);
     }
     return returnAux;
 }

@@ -1,61 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "General.h"
+#include "Gestion.h"
 #include "Menu.h"
 #include "Propietario.h"
 
 
-void prueba1()
-{
-    FILE* p = fopen("a.dat", "wb");
-    ePropietario* e;
-    ArrayList* l = al_newArrayList();
-
-    do
-    {
-        e = ePropietario_pedirPropietario(l);
-        e = (ePropietario*) l->get(l, l->len(l)-1);
-        e->print(e);
-        fwrite(e, sizeof(ePropietario), 1, p);
-    }
-    while(pedirConfirmacion("continuar") == 'S');
-    fclose(p);
-}
-
-
-void prueba2()
-{
-    FILE* pf;
-    ePropietario* e;
-    ArrayList* l2 = al_newArrayList();
-    char* modo = "rb";
-
-    pf = fopen("a.dat",modo);
-    e = (ePropietario*)malloc(sizeof(ePropietario));
-    fread(e, sizeof(ePropietario),1,pf);
-    if(ftell(pf)>=0)
-    {
-        printf("se abrio");
-    }
-    while(!feof(pf))
-    {
-        l2->add(l2,e);
-        e = (ePropietario*)malloc(sizeof(ePropietario));
-        //e = ePropietario_new();
-        fread(e, sizeof(ePropietario),1,pf);
-    }
-    fclose(pf);
-
-    l2->print(l2, ePropietario_mostrarUno, "char* header", 0);
-
-    pausa();
-}
-
-
 int main()
 {
-//    prueba1();
-//    prueba2();
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"ESTACIONAMIENTO"},
                            /*cantidad de opciones*/7,
@@ -102,13 +54,51 @@ int main()
         switch(opcion)
         {
             case 1:
-                ePropietario_gestionAlta(listadoPropietarios);
+                eGestion_alta(listadoPropietarios,
+                              ePropietario_pedirPropietario,
+                              ePropietario_mostrarUno,
+                              ePropietario_compararPorId,
+                              PROPIETARIO_ALTA_TITULO,
+                              PROPIETARIO_MOSTRAR_UNO_CABECERA,
+                              PROPIETARIO_MSJ_ALTA_OK);
                 break;
             case 2:
-
-                break;
+                eGestion_modificacion(listadoPropietarios,
+                                      ePropietario_modificarUno,
+                                      ePropietario_mostrarUno,
+                                      ePropietario_getIdPropietario,
+                                      ePropietario_new,
+                                      ePropietario_compararPorId,
+                                      sizeof(ePropietario),
+                                      PROPIETARIO_MODIFICACION_TITULO,
+                                      PROPIETARIO_LISTADO_TITULO,
+                                      PROPIETARIO_MOSTRAR_UNO_CABECERA,
+                                      PROPIETARIO_MSJ_LISTA_VACIA,
+                                      PROPIETARIO_MSJ_MODIFICACION_OK,
+                                      PROPIETARIO_MSJ_INGRESE_ID,
+                                      PROPIETARIO_MSJ_REINGRESE_ID,
+                                      PROPIETARIO_ID_MIN,
+                                      PROPIETARIO_ID_MAX,
+                                      PROPIETARIO_MOSTRAR_UNO_PAGINADO);
+              break;
             case 3:
-                ePropietario_gestionBaja(listadoPropietarios);
+                eGestion_baja(listadoPropietarios,
+                              ePropietario_mostrarUno,
+                              ePropietario_getIdPropietario,
+                              ePropietario_compararPorId,
+                              sizeof(ePropietario),
+                              PROPIETARIO_BAJA_TITULO,
+                              PROPIETARIO_LISTADO_TITULO,
+                              PROPIETARIO_MOSTRAR_UNO_CABECERA,
+                              PROPIETARIO_MSJ_LISTA_VACIA,
+                              PROPIETARIO_MSJ_CONFIRMAR_BAJA,
+                              PROPIETARIO_MSJ_BAJA_OK,
+                              PROPIETARIO_MSJ_INGRESE_ID,
+                              PROPIETARIO_MSJ_REINGRESE_ID,
+                              PROPIETARIO_ID_MIN,
+                              PROPIETARIO_ID_MAX,
+                              PROPIETARIO_MOSTRAR_UNO_PAGINADO);
+
                 break;
             case 4:
 
@@ -120,10 +110,17 @@ int main()
 
                 break;
             case 7:
-                ePropietario_gestionCargarArchivoDatos(listadoPropietarios);
+                eGestion_cargarArchivoDatos(listadoPropietarios,
+                                            ePropietario_compararPorId,
+                                            ePropietario_new,
+                                            sizeof(ePropietario),
+                                            GESTION_CARGAR_ARCHIVO_DATOS_TITULO);
                 break;
             case 8:
-                ePropietario_gestionGuardarArchivoDatos(listadoPropietarios);
+                eGestion_guardarArchivoDatos(listadoPropietarios,
+                                             sizeof(ePropietario),
+                                             GESTION_GUARDAR_ARCHIVO_DATOS_TITULO,
+                                             PROPIETARIO_MSJ_LISTA_VACIA);
                 break;
             case 9:
 
@@ -146,7 +143,13 @@ int main()
             case 15:
                 break;
             case 16:
-                ePropietario_gestionListado(listadoPropietarios);pausa();
+                eGestion_listado(listadoPropietarios,
+                                 ePropietario_mostrarUno,
+                                 PROPIETARIO_LISTADO_TITULO,
+                                 PROPIETARIO_MOSTRAR_UNO_CABECERA,
+                                 PROPIETARIO_MSJ_LISTA_VACIA,
+                                 PROPIETARIO_MOSTRAR_UNO_PAGINADO);
+                                 pausa();
                 break;
             case 0:
                 salirDelPrograma = pedirConfirmacion("Confirma que desea salir del programa?");

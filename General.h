@@ -26,21 +26,6 @@
 #define CHECK_SPACE -3
 #define CHECK_IS_EMPTY -4
 
-
-/**************************** MENSAJES INFO ******************************************************/
-#define MSJ_CONFIRMA_CORRECTOS "Confirma que los datos ingresados son correctos?"
-#define MSJ_CANCELO_GESTION "\nSe cancelo la gestion"
-#define MSJ_MODIFICANDO_REGISTRO "MODIFICANDO REGISTRO"
-#define MSJ_DATOS_A_MODIFICAR "\nDatos a modificar:\n"
-#define MSJ_SALIR_DEL_PROGRAMA "Confirma que desea salir del programa?"
-#define MSJ_REG_PROCESADOS "\n%d registros procesados"
-
-/**************************** MENSAJES ERROR *****************************************************/
-#define MSJ_MALLOC_STRING_ERROR "\nNo se pudo asignar memoria para el texto solicitado"
-#define MSJ_FUERA_DE_RANGO_ERROR "\nEl valor ingresado esta fuera del rango %d a %d"
-#define MSJ_RANGO_INVALIDO_ERROR "\nEl rango %d a %d no es valido"
-#define MSJ_NUEVO_REG_ERROR "\nHubo errores asignando memoria para %d registros nuevos"
-
 /**************************** BUSQUEDA ***********************************************************/
 /** \brief busca coincidencia de un valor entero dentro de un array
  *
@@ -252,4 +237,22 @@ int charToInt(char* cadena);
  */
 float calcularPromedio(float, float);
 //-----------------------------------------------------------------------------------------------//
+
+
+
+
+/**************************** MENSAJES INFO ******************************************************/
+#define MSJ_CONFIRMA_CORRECTOS "Confirma que los datos ingresados son correctos?"
+#define MSJ_CANCELO_GESTION "\nSe cancelo la gestion"
+#define MSJ_MODIFICANDO_REGISTRO "MODIFICANDO REGISTRO"
+#define MSJ_DATOS_A_MODIFICAR "\nDatos a modificar:\n"
+#define MSJ_SALIR_DEL_PROGRAMA "Confirma que desea salir del programa?"
+#define MSJ_REG_PROCESADOS "\n%d registros procesados"
+
+/**************************** MENSAJES ERROR *****************************************************/
+#define MSJ_MALLOC_STRING_ERROR "\nNo se pudo asignar memoria para el texto solicitado"
+#define MSJ_FUERA_DE_RANGO_ERROR "\nEl valor ingresado esta fuera del rango %d a %d"
+#define MSJ_RANGO_INVALIDO_ERROR "\nEl rango %d a %d no es valido"
+#define MSJ_NUEVO_REG_ERROR "\nHubo errores asignando memoria para %d registros nuevos"
+
 #endif // GENERAL_H_INCLUDED

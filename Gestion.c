@@ -173,26 +173,29 @@ int eGestion_baja(ArrayList* this,
        tituloBaja != NULL && tituloListado != NULL && cabecera != NULL &&
        msjListaVacia != NULL && msjConfirmar != NULL && msjOk && msjIngresoId != NULL && msjReingresoId != NULL)
     {
-        limpiarPantallaYMostrarTitulo(tituloBaja);
-
         if(!eGestion_informarListadoVacio(this, msjListaVacia))
         {
-            eGestion_listado(this, (*pMostrar), tituloListado, cabecera, msjListaVacia, paginado);
-
-            imprimirTitulo(tituloBaja);
-
             while(pElement == NULL)
             {
+                eGestion_listado(this, (*pMostrar), tituloListado, cabecera, msjListaVacia, paginado);
+                imprimirTitulo(tituloBaja);
                 pElement = eGestion_pedirIdYBuscar(this, (*pGetId), msjIngresoId, msjReingresoId, idMin, idMax);
+                if(pElement == NULL)
+                {
+                    imprimirEnPantalla("\nNo se encontro el ID ingresado");
+                    pausa();
+                }
             }
 
+            limpiarPantallaYMostrarTitulo(tituloBaja);
             imprimirEnPantalla(cabecera);
             (*pMostrar)(pElement);
             confirmacion = pedirConfirmacion(msjConfirmar);
 
             if(confirmacion == 'S')
             {
-                this->remove(this, this->indexOf(this, pElement));
+                pElement = this->pop(this, this->indexOf(this, pElement));
+                free(pElement);
                 this->sort(this, (*pComparar), ASC);
                 imprimirEnPantalla(msjOk);
             }
@@ -210,23 +213,97 @@ int eGestion_baja(ArrayList* this,
 }
 //-----------------------------------------------------------------------------------------------//
 int eGestion_modificacion(ArrayList* this,
+                          int (*pModificar)(void*),
                           void (*pMostrar)(void*),
+                          int (*pGetId)(void*),
+                          void* (*pConstructor)(),
                           int (*pComparar)(void*, void*),
                           int sizeOfStruct,
                           char* tituloModificacion,
                           char* tituloListado,
                           char* cabecera,
                           char* msjListaVacia,
-                          char* msjConfirmar,
                           char* msjOk,
+                          char* msjIngresoId,
+                          char* msjReingresoId,
                           int idMin,
                           int idMax,
                           int paginado)
 {
     int returnAux = CHECK_POINTER;
-    if(this != NULL)
+    void* pElement;
+    void* tempElement;
+    int index;
+    char confirmacion;
+    int huboCambios = 0;
+
+    if(this != NULL && (*pModificar) && (*pMostrar) != NULL && (*pGetId) != NULL && (*pConstructor) != NULL && (*pComparar) != NULL &&
+       tituloModificacion != NULL && tituloListado != NULL && cabecera != NULL &&
+       msjListaVacia != NULL && msjOk && msjIngresoId != NULL && msjReingresoId != NULL)
     {
-        returnAux = OK;
+        if(!eGestion_informarListadoVacio(this, msjListaVacia))
+        {
+            eGestion_listado(this, (*pMostrar), tituloListado, cabecera, msjListaVacia, paginado);
+
+            imprimirTitulo(tituloModificacion);
+
+            while(pElement == NULL)
+            {
+                pElement = eGestion_pedirIdYBuscar(this, (*pGetId), msjIngresoId, msjReingresoId, idMin, idMax);
+            }
+
+            tempElement = (*pConstructor)();
+            if(tempElement != NULL)
+            {
+                memcpy(tempElement, pElement, sizeOfStruct); //copio el registro para no pisar el origen
+
+                huboCambios = (*pModificar)(tempElement);
+            }
+            else
+            {
+                imprimirEnPantalla("\nError al copiar datos de resguardo");
+                confirmacion = 'N';
+            };
+
+            if(huboCambios > 0)
+            {
+                limpiarPantallaYMostrarTitulo(tituloModificacion);
+
+                imprimirEnPantalla(GESTION_MSJ_REGISTRO_ACTUAL);
+                imprimirEnPantalla(cabecera);
+                (*pMostrar)(pElement);
+
+                imprimirEnPantalla(GESTION_MSJ_REGISTRO_MODIFICADO);
+                imprimirEnPantalla(cabecera);
+                (*pMostrar)(tempElement);
+
+                saltoDeLinea();
+                confirmacion = pedirConfirmacion(MSJ_CONFIRMA_CORRECTOS);
+            }
+            else
+            {
+                confirmacion = 'N';
+            }
+
+            if(confirmacion == 'S')
+            {
+                index = this->indexOf(this, pElement);
+                this->add(this, tempElement);
+                this->remove(this, index);
+                free(pElement);
+                this->sort(this, (*pComparar), ASC);
+                imprimirEnPantalla(msjOk);
+                imprimirEnPantalla(msjOk);
+            }
+            else
+            {
+                imprimirEnPantalla(MSJ_CANCELO_GESTION);
+            }
+            returnAux = OK;
+        }
+
+        pausa();
+
     }
     return returnAux;
 }
