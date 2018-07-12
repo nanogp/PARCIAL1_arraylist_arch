@@ -23,7 +23,7 @@
 
 1529952509 d:\github\parcial1_arraylist_arch\menu.h
 
-1531354518 source:d:\github\parcial1_arraylist_arch\main.c
+1531354943 source:d:\github\parcial1_arraylist_arch\main.c
 	<stdio.h>
 	<stdlib.h>
 	"General.h"
@@ -105,14 +105,14 @@
 1531279784 c:\github\parcial1_arraylist_arch\gestion.h
 	"ArrayList.h"
 
-1531354082 source:d:\github\parcial1_arraylist_arch\gestion.c
+1531354980 source:d:\github\parcial1_arraylist_arch\gestion.c
 	"Gestion.h"
 	"General.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1531354769 d:\github\parcial1_arraylist_arch\gestion.h
+1531354960 d:\github\parcial1_arraylist_arch\gestion.h
 	"ArrayList.h"
 
 1531354304 source:d:\github\parcial1_arraylist_arch\automovil.c

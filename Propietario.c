@@ -100,7 +100,6 @@ void* ePropietario_new()
     return propietario;
 }
 //-----------------------------------------------------------------------------------------------//
-
 void* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta)
 {
     void* propietario;
@@ -327,7 +326,6 @@ int ePropietario_compararPorTarjeta(void* this, void* that)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-
 int ePropietario_ordenarPorNombre(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;
@@ -340,7 +338,6 @@ int ePropietario_ordenarPorNombre(ArrayList* this)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-
 int ePropietario_ordenarPorTarjeta(ArrayList* this)
 {
     int returnAux = CHECK_POINTER;

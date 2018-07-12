@@ -97,15 +97,15 @@ int main()
 
                 break;
             case 4:
-                eGestion_altaHijo(listadoAutomoviles,
-                                  listadoPropietarios,
-                                  eAutomovil_pedirAutomovil,
-                                  eAutomovil_mostrarUno,
-                                  eAutomovil_compararPorPatente,
-                                  AUTOMOVIL_ALTA_TITULO,
-                                  AUTOMOVIL_MOSTRAR_UNO_CABECERA,
-                                  PROPIETARIO_MSJ_LISTA_VACIA,
-                                  AUTOMOVIL_MSJ_ALTA_OK);
+                eGestion_altaForeign(listadoAutomoviles,
+                                     listadoPropietarios,
+                                     eAutomovil_pedirAutomovil,
+                                     eAutomovil_mostrarUno,
+                                     eAutomovil_compararPorPatente,
+                                     AUTOMOVIL_ALTA_TITULO,
+                                     AUTOMOVIL_MOSTRAR_UNO_CABECERA,
+                                     PROPIETARIO_MSJ_LISTA_VACIA,
+                                     AUTOMOVIL_MSJ_ALTA_OK);
                 break;
             case 5:
                 eGestion_modificacion(listadoAutomoviles,

@@ -319,15 +319,15 @@ int eGestion_modificacion(ArrayList* this,
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-int eGestion_altaHijo(ArrayList* this,
-                      ArrayList* that,
-                      void* (*pIngreso)(ArrayList*, ArrayList*),
-                      void (*pMostrar)(void*),
-                      int (*pComparar)(void*, void*),
-                      char* titulo,
-                      char* cabecera,
-                      char* msjListaVacia,
-                      char* msjOk)
+int eGestion_altaForeign(ArrayList* this,
+                         ArrayList* that,
+                         void* (*pIngreso)(ArrayList*, ArrayList*),
+                         void (*pMostrar)(void*),
+                         int (*pComparar)(void*, void*),
+                         char* titulo,
+                         char* cabecera,
+                         char* msjListaVacia,
+                         char* msjOk)
 {
     int returnAux = CHECK_POINTER;
     void* pElement;

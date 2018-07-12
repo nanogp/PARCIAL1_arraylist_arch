@@ -58,15 +58,15 @@ int eGestion_modificacion(ArrayList* this,
                           int idMin,
                           int idMax,
                           int paginado);
-int eGestion_altaHijo(ArrayList* this,
-                      ArrayList* that,
-                      void* (*pIngreso)(ArrayList*, ArrayList*),
-                      void (*pMostrar)(void*),
-                      int (*pComparar)(void*, void*),
-                      char* titulo,
-                      char* cabecera,
-                      char* msjListaVacia,
-                      char* msjOk);
+int eGestion_altaForeign(ArrayList* this,
+                         ArrayList* that,
+                         void* (*pIngreso)(ArrayList*, ArrayList*),
+                         void (*pMostrar)(void*),
+                         int (*pComparar)(void*, void*),
+                         char* titulo,
+                         char* cabecera,
+                         char* msjListaVacia,
+                         char* msjOk);
 int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
 
 /**************************** ARCHIVOS ***********************************************************/
