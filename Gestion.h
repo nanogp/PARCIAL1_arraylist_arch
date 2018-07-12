@@ -58,11 +58,6 @@ int eGestion_modificacion(ArrayList* this,
                           int idMin,
                           int idMax,
                           int paginado);
-int eGestion_cargarArchivoDatos(ArrayList* this, int (*pComparar)(void*, void*), void* (*pConstructor)(), int sizeOfStruct, char* titulo);
-int eGestion_guardarArchivoDatos(ArrayList* this, int sizeOfStruct, char* titulo, char* msjListaVacia);
-int eGestion_cargarArchivoTexto(ArrayList* this, void* (*pParseAVoid)(char*, int), int (*pComparar)(void*, void*), char* titulo, int bufferSize);
-int eGestion_guardarArchivoTexto(ArrayList* this, char* (*pParseATexto)(void*, int), char* titulo, char* msjListaVacia, int bufferSize);
-int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
 int eGestion_altaHijo(ArrayList* this,
                       ArrayList* that,
                       void* (*pIngreso)(ArrayList*, ArrayList*),
@@ -72,6 +67,13 @@ int eGestion_altaHijo(ArrayList* this,
                       char* cabecera,
                       char* msjListaVacia,
                       char* msjOk);
+int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
+
+/**************************** ARCHIVOS ***********************************************************/
+int eGestion_cargarArchivoDatos(ArrayList* this, int (*pComparar)(void*, void*), void* (*pConstructor)(), int sizeOfStruct, char* titulo);
+int eGestion_guardarArchivoDatos(ArrayList* this, int sizeOfStruct, char* titulo, char* msjListaVacia);
+int eGestion_cargarArchivoTexto(ArrayList* this, void* (*pParseAVoid)(char*, int), int (*pComparar)(void*, void*), char* titulo, int bufferSize);
+int eGestion_guardarArchivoTexto(ArrayList* this, char* (*pParseATexto)(void*, int), char* titulo, char* msjListaVacia, int bufferSize);
 
 /**************************** TITULOS ************************************************************/
 #define GESTION_CARGAR_ARCHIVO_DATOS_TITULO "CARGA ARCHIVO DE DATOS"

@@ -66,7 +66,6 @@ int eGestion_informarListadoVacio(ArrayList* this, char* mensaje)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-
 void* eGestion_buscarPorId(ArrayList* this, int (*pGetId)(void*), int id)
 {
     void* returnAux = NULL;
@@ -88,7 +87,6 @@ void* eGestion_buscarPorId(ArrayList* this, int (*pGetId)(void*), int id)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-
 void* eGestion_pedirIdYBuscar(ArrayList* this,
                               int (*pGetId)(void*),
                               char* msjIngreso,
@@ -106,8 +104,6 @@ void* eGestion_pedirIdYBuscar(ArrayList* this,
     }
     return returnAux;
 }
-//-----------------------------------------------------------------------------------------------//
-
 /**************************** GESTION DE DATOS ***************************************************/
 int eGestion_alta(ArrayList* this,
                   void* (*pIngreso)(ArrayList*),
@@ -323,6 +319,83 @@ int eGestion_modificacion(ArrayList* this,
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
+int eGestion_altaHijo(ArrayList* this,
+                      ArrayList* that,
+                      void* (*pIngreso)(ArrayList*, ArrayList*),
+                      void (*pMostrar)(void*),
+                      int (*pComparar)(void*, void*),
+                      char* titulo,
+                      char* cabecera,
+                      char* msjListaVacia,
+                      char* msjOk)
+{
+    int returnAux = CHECK_POINTER;
+    void* pElement;
+    char confirmacion;
+
+    if(this != NULL && that != NULL && (*pIngreso) != NULL && (*pMostrar) != NULL && (*pMostrar) != NULL && (*pComparar) != NULL &&
+       titulo != NULL && cabecera != NULL && msjListaVacia != NULL && msjOk != NULL)
+    {
+        limpiarPantallaYMostrarTitulo(titulo);
+
+        if(!eGestion_informarListadoVacio(that, msjListaVacia))
+        {
+
+            pElement = (*pIngreso)(this, that);
+
+            if(pElement != NULL)
+            {
+                imprimirEnPantalla(cabecera);
+                (*pMostrar)(pElement);
+                confirmacion = pedirConfirmacion(MSJ_CONFIRMA_CORRECTOS);
+                returnAux = OK;
+            }
+            else
+            {
+                imprimirEnPantalla("\nError al setear datos en registro nuevo");
+                confirmacion = 'N';
+            }
+
+
+            if(confirmacion == 'S')
+            {
+                this->add(this, pElement);
+                this->sort(this, (*pComparar), ASC);
+                imprimirEnPantalla(msjOk);
+            }
+            else
+            {
+                imprimirEnPantalla(MSJ_CANCELO_GESTION);
+            }
+        }
+        pausa();
+
+    }
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
+int eGestion_listado(ArrayList* this,
+                     void (*pMostrar)(void*),
+                     char* titulo,
+                     char* cabecera,
+                     char* msjListaVacia,
+                     int paginado)
+{
+    int returnAux = CHECK_POINTER;
+    if(this != NULL && (*pMostrar) != NULL && titulo != NULL && cabecera != NULL && msjListaVacia != NULL)
+    {
+        returnAux = OK;
+
+        limpiarPantallaYMostrarTitulo(titulo);
+
+        if(!eGestion_informarListadoVacio(this, msjListaVacia))
+        {
+            returnAux = this->print(this, (*pMostrar), cabecera, paginado);
+        }
+    }
+    return returnAux;
+}
+/**************************** ARCHIVOS ***********************************************************/
 int eGestion_cargarArchivoDatos(ArrayList* this,
                                 int (*pComparar)(void*, void*),
                                 void* (*pConstructor)(),
@@ -609,83 +682,6 @@ int eGestion_guardarArchivoTexto(ArrayList* this,
     }//endif this
 
     pausa();
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-int eGestion_listado(ArrayList* this,
-                     void (*pMostrar)(void*),
-                     char* titulo,
-                     char* cabecera,
-                     char* msjListaVacia,
-                     int paginado)
-{
-    int returnAux = CHECK_POINTER;
-    if(this != NULL && (*pMostrar) != NULL && titulo != NULL && cabecera != NULL && msjListaVacia != NULL)
-    {
-        returnAux = OK;
-
-        limpiarPantallaYMostrarTitulo(titulo);
-
-        if(!eGestion_informarListadoVacio(this, msjListaVacia))
-        {
-            returnAux = this->print(this, (*pMostrar), cabecera, paginado);
-        }
-    }
-    return returnAux;
-}
-//-----------------------------------------------------------------------------------------------//
-int eGestion_altaHijo(ArrayList* this,
-                      ArrayList* that,
-                      void* (*pIngreso)(ArrayList*, ArrayList*),
-                      void (*pMostrar)(void*),
-                      int (*pComparar)(void*, void*),
-                      char* titulo,
-                      char* cabecera,
-                      char* msjListaVacia,
-                      char* msjOk)
-{
-    int returnAux = CHECK_POINTER;
-    void* pElement;
-    char confirmacion;
-
-    if(this != NULL && that != NULL && (*pIngreso) != NULL && (*pMostrar) != NULL && (*pMostrar) != NULL && (*pComparar) != NULL &&
-       titulo != NULL && cabecera != NULL && msjListaVacia != NULL && msjOk != NULL)
-    {
-        limpiarPantallaYMostrarTitulo(titulo);
-
-        if(!eGestion_informarListadoVacio(that, msjListaVacia))
-        {
-
-            pElement = (*pIngreso)(this, that);
-
-            if(pElement != NULL)
-            {
-                imprimirEnPantalla(cabecera);
-                (*pMostrar)(pElement);
-                confirmacion = pedirConfirmacion(MSJ_CONFIRMA_CORRECTOS);
-                returnAux = OK;
-            }
-            else
-            {
-                imprimirEnPantalla("\nError al setear datos en registro nuevo");
-                confirmacion = 'N';
-            }
-
-
-            if(confirmacion == 'S')
-            {
-                this->add(this, pElement);
-                this->sort(this, (*pComparar), ASC);
-                imprimirEnPantalla(msjOk);
-            }
-            else
-            {
-                imprimirEnPantalla(MSJ_CANCELO_GESTION);
-            }
-        }
-        pausa();
-
-    }
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
