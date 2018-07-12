@@ -4,30 +4,31 @@
 #include "Gestion.h"
 #include "Menu.h"
 #include "Propietario.h"
+#include "Automovil.h"
 
 
 int main()
 {
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"ESTACIONAMIENTO"},
-                           /*cantidad de opciones*/9,
-                           /*codigos*/{1,2,3,7,8,9,10,16,
+                           /*cantidad de opciones*/17,
+                           /*codigos*/{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
                            0},
                            /*descripciones*/{"\n 1. Alta Propietario"
                                              "\n 2. Modificacion Propietario"
                                              "\n 3. Baja Propietario"
-//                                             "\n 4. Ingreso del Automovil"
-//                                             "\n 5. Modificacion Automovil"
-//                                             "\n 6. Egreso del Automovil"
+                                             "\n 4. Ingreso del Automovil"
+                                             "\n 5. Modificacion Automovil"
+                                             "\n 6. Egreso del Automovil"
                                              "\n 7. Cargar Archivo Datos Propietarios"
                                              "\n 8. Guardar Archivo Datos Propietarios"
                                              "\n 9. Cargar Archivo CSV Propietarios"
                                              "\n10. Guardar Archivo CSV Propietarios"
-//                                             "\n11. Cargar Archivo Datos Automoviles"
-//                                             "\n12. Guardar Archivo Datos Automoviles"
-//                                             "\n13. Cargar Archivo CSV Automoviles"
-//                                             "\n14. Guardar Archivo CSV Automoviles"
-//                                             "\n15. Listar Automoviles"
+                                             "\n11. Cargar Archivo Datos Automoviles"
+                                             "\n12. Guardar Archivo Datos Automoviles"
+                                             "\n13. Cargar Archivo CSV Automoviles"
+                                             "\n14. Guardar Archivo CSV Automoviles"
+                                             "\n15. Listar Automoviles"
                                              "\n16. Listar Propietarios"
                                              "\n 0. Salir del programa"}};
     int opcion;
@@ -35,15 +36,9 @@ int main()
 
     //ARRAYS DE ESTRUCTURAS
     ArrayList* listadoPropietarios = al_newArrayList();
+    ArrayList* listadoAutomoviles = al_newArrayList();
 
-//ePropietario* p;
-//p = ePropietario_newParam(1,"jose","Araujo 12312",12345678);
-//listadoPropietarios->add(listadoPropietarios,p);
-//p = ePropietario_newParam(2,"domingo","sarmiento 123",87524);
-//listadoPropietarios->add(listadoPropietarios,p);
-
-
-    if(listadoPropietarios == NULL)
+    if(listadoPropietarios == NULL || listadoAutomoviles == NULL)
     {
         returnAux = CHECK_POINTER;
     }
@@ -67,7 +62,7 @@ int main()
                 eGestion_modificacion(listadoPropietarios,
                                       ePropietario_modificarUno,
                                       ePropietario_mostrarUno,
-                                      ePropietario_getIdPropietario,
+                                      ePropietario_getId,
                                       ePropietario_new,
                                       ePropietario_compararPorId,
                                       sizeof(ePropietario),
@@ -85,7 +80,7 @@ int main()
             case 3:
                 eGestion_baja(listadoPropietarios,
                               ePropietario_mostrarUno,
-                              ePropietario_getIdPropietario,
+                              ePropietario_getId,
                               ePropietario_compararPorId,
                               sizeof(ePropietario),
                               PROPIETARIO_BAJA_TITULO,
@@ -102,12 +97,52 @@ int main()
 
                 break;
             case 4:
-
+                eGestion_altaHijo(listadoAutomoviles,
+                                  listadoPropietarios,
+                                  eAutomovil_pedirAutomovil,
+                                  eAutomovil_mostrarUno,
+                                  eAutomovil_compararPorPatente,
+                                  AUTOMOVIL_ALTA_TITULO,
+                                  AUTOMOVIL_MOSTRAR_UNO_CABECERA,
+                                  PROPIETARIO_MSJ_LISTA_VACIA,
+                                  AUTOMOVIL_MSJ_ALTA_OK);
                 break;
             case 5:
-
+                eGestion_modificacion(listadoAutomoviles,
+                                      eAutomovil_modificarUno,
+                                      eAutomovil_mostrarUno,
+                                      eAutomovil_getId,
+                                      eAutomovil_new,
+                                      eAutomovil_compararPorId,
+                                      sizeof(eAutomovil),
+                                      AUTOMOVIL_MODIFICACION_TITULO,
+                                      AUTOMOVIL_LISTADO_TITULO,
+                                      AUTOMOVIL_MOSTRAR_UNO_CABECERA,
+                                      AUTOMOVIL_MSJ_LISTA_VACIA,
+                                      AUTOMOVIL_MSJ_MODIFICACION_OK,
+                                      AUTOMOVIL_MSJ_INGRESE_ID,
+                                      AUTOMOVIL_MSJ_REINGRESE_ID,
+                                      AUTOMOVIL_ID_MIN,
+                                      AUTOMOVIL_ID_MAX,
+                                      AUTOMOVIL_MOSTRAR_UNO_PAGINADO);
                 break;
             case 6:
+                eGestion_baja(listadoAutomoviles,
+                              eAutomovil_mostrarUno,
+                              eAutomovil_getId,
+                              eAutomovil_compararPorId,
+                              sizeof(eAutomovil),
+                              AUTOMOVIL_BAJA_TITULO,
+                              AUTOMOVIL_LISTADO_TITULO,
+                              AUTOMOVIL_MOSTRAR_UNO_CABECERA,
+                              AUTOMOVIL_MSJ_LISTA_VACIA,
+                              AUTOMOVIL_MSJ_CONFIRMAR_BAJA,
+                              AUTOMOVIL_MSJ_BAJA_OK,
+                              AUTOMOVIL_MSJ_INGRESE_ID,
+                              AUTOMOVIL_MSJ_REINGRESE_ID,
+                              AUTOMOVIL_ID_MIN,
+                              AUTOMOVIL_ID_MAX,
+                              AUTOMOVIL_MOSTRAR_UNO_PAGINADO);
 
                 break;
             case 7:
@@ -150,6 +185,13 @@ int main()
 
                 break;
             case 15:
+                eGestion_listado(listadoAutomoviles,
+                                 eAutomovil_mostrarUno,
+                                 AUTOMOVIL_LISTADO_TITULO,
+                                 AUTOMOVIL_MOSTRAR_UNO_CABECERA,
+                                 AUTOMOVIL_MSJ_LISTA_VACIA,
+                                 AUTOMOVIL_MOSTRAR_UNO_PAGINADO);
+                                 pausa();
                 break;
             case 16:
                 eGestion_listado(listadoPropietarios,

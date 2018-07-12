@@ -10,7 +10,8 @@
 #define GESTION_RUTA_LARGO_MAX 255
 
 /**************************** BUSQUEDA ***********************************************************/
-int eGestion_compararPorId(void* this, void* that, int (*pGetId)(void*));
+int eGestion_compararPorInt(void* this, void* that, int (*pGet)(void*));
+int eGestion_compararPorString(void* this, void* that, char* (*pGet)(void*));
 int eGestion_siguienteId(ArrayList* this, int (*pGetId)(void*));
 int eGestion_informarListadoVacio(ArrayList* this, char* mensaje);
 void* eGestion_buscarPorId(ArrayList* this, int (*pGetId)(void*), int id);
@@ -62,6 +63,15 @@ int eGestion_guardarArchivoDatos(ArrayList* this, int sizeOfStruct, char* titulo
 int eGestion_cargarArchivoTexto(ArrayList* this, void* (*pParseAVoid)(char*, int), int (*pComparar)(void*, void*), char* titulo, int bufferSize);
 int eGestion_guardarArchivoTexto(ArrayList* this, char* (*pParseATexto)(void*, int), char* titulo, char* msjListaVacia, int bufferSize);
 int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, char* cabecera, char* msjListaVacia, int paginado);
+int eGestion_altaHijo(ArrayList* this,
+                      ArrayList* that,
+                      void* (*pIngreso)(ArrayList*, ArrayList*),
+                      void (*pMostrar)(void*),
+                      int (*pComparar)(void*, void*),
+                      char* titulo,
+                      char* cabecera,
+                      char* msjListaVacia,
+                      char* msjOk);
 
 /**************************** TITULOS ************************************************************/
 #define GESTION_CARGAR_ARCHIVO_DATOS_TITULO "CARGA ARCHIVO DE DATOS"

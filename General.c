@@ -1,12 +1,6 @@
 /**************************** INCLUSION DE LIBRERIAS PERSONALES **********************************/
 #include "General.h"
 
-/**************************** INCLUSION DE LIBRERIAS ESTANDAR ************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-
 /**************************** BUSQUEDA ***********************************************************/
 int buscarEnArrayInt(int* array, int limite, int buscar)
 {

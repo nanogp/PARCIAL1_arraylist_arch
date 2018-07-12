@@ -1,13 +1,8 @@
 /**************************** INCLUSION DE LIBRERIAS PERSONALES **********************************/
 #include "Propietario.h"
 
-/**************************** INCLUSION DE LIBRERIAS ESTANDAR ************************************/
-#include <stdio.h>
-#include <string.h>
-
-
 /**************************** GETTERS ************************************************************/
-int ePropietario_getIdPropietario(void* this)
+int ePropietario_getId(void* this)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL)
@@ -48,11 +43,8 @@ float ePropietario_getTarjeta(void* this)
     }
     return returnAux;
 }
-//-----------------------------------------------------------------------------------------------//
-
-
 /**************************** SETTERS ************************************************************/
-int ePropietario_setIdPropietario(void* this, int id)
+int ePropietario_setId(void* this, int id)
 {
     int returnAux = CHECK_POINTER;
     if(this != NULL)
@@ -98,9 +90,6 @@ int ePropietario_setTarjeta(void* this, float tarjeta)
     }
     return returnAux;
 }
-//-----------------------------------------------------------------------------------------------//
-
-
 /**************************** CONSTRUCTORES ******************************************************/
 void* ePropietario_new()
 {
@@ -120,15 +109,13 @@ void* ePropietario_newParam(int id, char* nombre, char* direccion, float tarjeta
 
     if(propietario != NULL)
     {
-        ePropietario_setIdPropietario(propietario, id);
+        ePropietario_setId(propietario, id);
         ePropietario_setNombre(propietario, nombre);
         ePropietario_setDireccion(propietario, direccion);
         ePropietario_setTarjeta(propietario, tarjeta);
     }
     return propietario;
 }
-//-----------------------------------------------------------------------------------------------//
-
 /**************************** ENTRADA DE DATOS ***************************************************/
 char* ePropietario_pedirNombre()
 {
@@ -158,29 +145,25 @@ void* ePropietario_pedirPropietario(ArrayList* this)
         direccion = ePropietario_pedirDireccion();
         tarjeta = ePropietario_pedirTarjeta();
 
-        propietario = ePropietario_newParam(eGestion_siguienteId(this, ePropietario_getIdPropietario),
+        propietario = ePropietario_newParam(eGestion_siguienteId(this, ePropietario_getId),
                                             nombre,
                                             direccion,
                                             tarjeta);
     }
     return propietario;
 }
-//-----------------------------------------------------------------------------------------------//
-
 /**************************** LISTADO DE DATOS ***************************************************/
 void ePropietario_mostrarUno(void* this)
 {
     if(this != NULL)
     {
         printf(PROPIETARIO_MOSTRAR_UNO_MASCARA,
-               ePropietario_getIdPropietario(this),
+               ePropietario_getId(this),
                ePropietario_getNombre(this),
                ePropietario_getDireccion(this),
                ePropietario_getTarjeta(this));
     }
 }
-//-----------------------------------------------------------------------------------------------//
-
 /**************************** GESTION DE DATOS ***************************************************/
 int ePropietario_modificarUno(void* this)
 {
@@ -269,7 +252,7 @@ char* ePropietario_parserATexto(void* this, int bufferSize)
         {
             propietario = (ePropietario*) this;
             strcpy(returnAux, "");
-            strcat(returnAux, intToChar(ePropietario_getIdPropietario(propietario)));
+            strcat(returnAux, intToChar(ePropietario_getId(propietario)));
             strcat(returnAux, ",");
             strcat(returnAux, ePropietario_getNombre(propietario));
             strcat(returnAux, ",");
@@ -299,8 +282,6 @@ void* ePropietario_parserAVoid(char* this, int bufferSize)
 
     return returnAux;
 }
-//-----------------------------------------------------------------------------------------------//
-
 /**************************** ORDENAMIENTO *******************************************************/
 int ePropietario_compararPorId(void* this, void* that)
 {
@@ -308,7 +289,7 @@ int ePropietario_compararPorId(void* this, void* that)
 
     if(this != NULL && that != NULL)
     {
-        returnAux = eGestion_compararPorId(this, that, ePropietario_getIdPropietario);
+        returnAux = eGestion_compararPorInt(this, that, ePropietario_getId);
     }
     return returnAux;
 }
@@ -372,4 +353,3 @@ int ePropietario_ordenarPorTarjeta(ArrayList* this)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-

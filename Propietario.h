@@ -8,7 +8,9 @@
 #include "Menu.h"
 #include "ArrayList.h"
 
-/**************************** INCLUSION DE LIBRERIAS DEFAULT *************************************/
+/**************************** INCLUSION DE LIBRERIAS ESTANDAR ************************************/
+#include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 /**************************** LIMITES ************************************************************/
@@ -32,13 +34,13 @@ typedef struct
 
 
 /**************************** GETTERS ************************************************************/
-int ePropietario_getIdPropietario(void* this);
+int ePropietario_getId(void* this);
 char* ePropietario_getNombre(void* this);
 char* ePropietario_getDireccion(void* this);
 float ePropietario_getTarjeta(void* this);
 
 /**************************** SETTERS ************************************************************/
-int ePropietario_setIdPropietario(void* this, int id);
+int ePropietario_setId(void* this, int id);
 int ePropietario_setNombre(void* this, char* nombre);
 int ePropietario_setDireccion(void* this, char* direccion);
 int ePropietario_setTarjeta(void* this, float tarjeta);

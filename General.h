@@ -2,6 +2,11 @@
 #ifndef GENERAL_H_INCLUDED
 #define GENERAL_H_INCLUDED
 
+/**************************** INCLUSION DE LIBRERIAS ESTANDAR ************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /**************************** MACROS *************************************************************/
 #define DEFINIR_MACRO_STRING(nombre_macro) #nombre_macro
 #define LIMPIAR_PANTALLA "cls"

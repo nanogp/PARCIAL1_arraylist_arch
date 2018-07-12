@@ -19,6 +19,9 @@
 #ifndef __ARRAYLIST
 #define __ARRAYLIST
 #include "General.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #define ASC 1
 #define DESC 0
 struct ArrayList{
